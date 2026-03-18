@@ -1,0 +1,1108 @@
+﻿<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI每日日报</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #007AFF;
+            --primary-light: #5AC8FA;
+            --secondary: #5856D6;
+            --accent: #FF9500;
+            --success: #34C759;
+            --danger: #FF3B30;
+            --warning: #FF9500;
+            --bg-primary: #F2F2F7;
+            --bg-card: #FFFFFF;
+            --bg-card-hover: #FAFAFC;
+            --text-primary: #1C1C1E;
+            --text-secondary: #8E8E93;
+            --text-tertiary: #AEAEB2;
+            --border: #E5E5EA;
+            --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.04);
+            --shadow-md: 0 4px 16px rgba(0, 0, 0, 0.08);
+            --shadow-lg: 0 8px 32px rgba(0, 0, 0, 0.12);
+            --radius-sm: 8px;
+            --radius-md: 12px;
+            --radius-lg: 16px;
+            --radius-xl: 20px;
+            --transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Noto Sans SC', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            background: linear-gradient(135deg, #F2F2F7 0%, #E8F4FD 50%, #F0F0F7 100%);
+            min-height: 100vh;
+            color: var(--text-primary);
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+
+        /* Header */
+        header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .logo {
+            display: inline-flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 12px;
+        }
+
+        .logo-icon {
+            width: 48px;
+            height: 48px;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            border-radius: var(--radius-md);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: var(--shadow-md);
+        }
+
+        .logo-icon svg {
+            width: 28px;
+            height: 28px;
+            fill: white;
+        }
+
+        h1 {
+            font-size: 32px;
+            font-weight: 700;
+            background: linear-gradient(135deg, var(--text-primary) 0%, var(--primary) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .subtitle {
+            color: var(--text-secondary);
+            font-size: 15px;
+            margin-top: 8px;
+        }
+
+        /* Tabs */
+        .tabs-wrapper {
+            background: var(--bg-card);
+            border-radius: var(--radius-lg);
+            box-shadow: var(--shadow-sm);
+            padding: 8px;
+            margin-bottom: 32px;
+            overflow-x: auto;
+        }
+
+        .tabs {
+            display: flex;
+            gap: 4px;
+            min-width: max-content;
+        }
+
+        .tab {
+            padding: 10px 18px;
+            border: none;
+            background: transparent;
+            color: var(--text-secondary);
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+            border-radius: var(--radius-sm);
+            transition: var(--transition);
+            white-space: nowrap;
+            font-family: inherit;
+        }
+
+        .tab:hover {
+            background: var(--bg-primary);
+            color: var(--text-primary);
+        }
+
+        .tab.active {
+            background: var(--primary);
+            color: white;
+            box-shadow: 0 2px 8px rgba(0, 122, 255, 0.3);
+        }
+
+        /* Timeline - 简洁时间轴 */
+        .timeline {
+            position: relative;
+            padding-left: 40px;
+            background: transparent;
+            border-radius: 0;
+        }
+
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 12px;
+            top: 0;
+            bottom: 0;
+            width: 2px;
+            background: #E5E5EA;
+            border-radius: 2px;
+        }
+
+        .timeline-item {
+            position: relative;
+            margin-bottom: 16px;
+        }
+
+        .timeline-date, .timeline-dot {
+            display: none;
+        }
+
+        /* Card */
+        .card {
+            background: #FFFFFF;
+            border-radius: 14px;
+            padding: 16px 20px;
+            box-shadow: 0 1px 4px rgba(0,0,0,0.08);
+            transition: all 0.2s ease;
+            cursor: pointer;
+            border: 1px solid #F0F0F0;
+        }
+
+        .card:hover {
+            box-shadow: 0 3px 12px rgba(0,0,0,0.1);
+            transform: translateY(-2px);
+        }
+
+        .card-header {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 10px;
+        }
+
+        .category-tag {
+            padding: 4px 12px;
+            border-radius: 12px;
+            font-size: 12px;
+            font-weight: 600;
+        }
+
+        .category-llm { background: #E3F2FD; color: #1976D2; }
+        .category-tech { background: #F3E5F5; color: #7B1FA2; }
+        .category-company { background: #FFF3E0; color: #E65100; }
+        .category-product { background: #FFF8E1; color: #FF8F00; }
+        .category-application { background: #E0F2F1; color: #00796B; }
+        .category-industry { background: #FCE4EC; color: #C2185B; }
+        .category-agent { background: #EDE7F6; color: #673AB7; }
+
+        .card-title {
+            font-size: 17px;
+            font-weight: 600;
+            color: var(--text-primary);
+            line-height: 1.4;
+            margin-bottom: 8px;
+        }
+
+        .card-title a {
+            text-decoration: none;
+            color: inherit;
+            transition: var(--transition);
+        }
+
+        .card-title a:hover {
+            color: var(--primary);
+        }
+
+        .card-desc {
+            font-size: 14px;
+            color: var(--text-secondary);
+            line-height: 1.6;
+            margin-bottom: 12px;
+        }
+
+        .card-meta {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            font-size: 12px;
+            color: var(--text-tertiary);
+        }
+
+        .card-meta span {
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+        }
+
+        /* Footer */
+        footer {
+            text-align: center;
+            padding: 40px 20px;
+            color: var(--text-tertiary);
+            font-size: 13px;
+        }
+
+        footer a {
+            color: var(--primary);
+            text-decoration: none;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .container {
+                padding: 24px 16px;
+            }
+
+            h1 {
+                font-size: 26px;
+            }
+
+            .timeline {
+                padding-left: 24px;
+            }
+
+            .timeline::before {
+                left: 6px;
+            }
+
+            .timeline-date {
+                position: static;
+                width: auto;
+                text-align: left;
+                margin-bottom: 8px;
+                font-size: 12px;
+                color: var(--text-tertiary);
+            }
+
+            .timeline-dot {
+                left: -26px;
+                top: 0;
+            }
+
+            .card {
+                padding: 16px;
+            }
+
+            .card-title {
+                font-size: 15px;
+            }
+
+            .tabs-wrapper {
+                margin: 0 -8px 24px;
+                border-radius: var(--radius-md);
+                padding: 6px;
+            }
+
+            .tab {
+                padding: 8px 14px;
+                font-size: 13px;
+            }
+        }
+
+        /* Animation */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .timeline-item {
+            animation: fadeInUp 0.5s ease forwards;
+            opacity: 0;
+        }
+
+        .timeline-item:nth-child(1) { animation-delay: 0.05s; }
+        .timeline-item:nth-child(2) { animation-delay: 0.1s; }
+        .timeline-item:nth-child(3) { animation-delay: 0.15s; }
+        .timeline-item:nth-child(4) { animation-delay: 0.2s; }
+        .timeline-item:nth-child(5) { animation-delay: 0.25s; }
+        .timeline-item:nth-child(6) { animation-delay: 0.3s; }
+        .timeline-item:nth-child(7) { animation-delay: 0.35s; }
+        .timeline-item:nth-child(8) { animation-delay: 0.4s; }
+
+        /* Tab content */
+        .tab-content {
+            display: none;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <div class="logo">
+                <div class="logo-icon">
+                    <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/>
+                    </svg>
+                </div>
+                <h1>AI每日日报</h1>
+            </div>
+            <p class="subtitle">每天更新，聚焦AI行业最新动�?/p>
+        </header>
+
+        <div class="tabs-wrapper">
+            <div class="tabs">
+                <button class="tab active" data-tab="all">全部</button>
+                <button class="tab" data-tab="llm">大模型动�?/button>
+                <button class="tab" data-tab="agent">智能�?/button>
+                <button class="tab" data-tab="tech">技术进�?/button>
+                <button class="tab" data-tab="company">公司动向</button>
+                <button class="tab" data-tab="product">产品发布</button>
+                <button class="tab" data-tab="application">应用落地</button>
+                <button class="tab" data-tab="industry">行业观察</button>
+            </div>
+        </div>
+
+        <!-- All -->
+        <div class="tab-content active" id="all">
+            <div class="timeline">
+                <!-- 2026-03-18 -->
+                <div class="timeline-item" data-category="llm">
+                    <div class="timeline-date">2026-03-18</div>
+                    <div class="timeline-dot"></div>
+                    <div class="card">
+                        <div class="card-header">
+                            <span class="category-tag category-llm">大模型动�?/span>
+                        </div>
+                        <h3 class="card-title"><a href="https://venturebeat.com/infrastructure/nvidia-introduces-vera-rubin-a-seven-chip-ai-platform-with-openai-anthropic" target="_blank">Nvidia发布Vera Rubin平台：史上最强AI芯片</a></h3>
+                        <p class="card-desc">Nvidia在GTC 2026大会上发布全新Vera Rubin平台，采�?芯片设计，推理吞吐量较Blackwell提升10倍，能源效率大幅优化�?/p>
+                        <div class="card-meta">
+                            <span>📍 VentureBeat</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="timeline-item" data-category="llm">
+                    <div class="timeline-date">2026-03-18</div>
+                    <div class="timeline-dot"></div>
+                    <div class="card">
+                        <div class="card-header">
+                            <span class="category-tag category-llm">大模型动�?/span>
+                        </div>
+                        <h3 class="card-title"><a href="https://venturebeat.com/infrastructure/nvidias-dgx-station-is-a-desktop-supercomputer-that-runs-trillion-parameter" target="_blank">Nvidia推出DGX Station桌面超级计算�?/a></h3>
+                        <p class="card-desc">一款可在单个工程师桌面上运行万亿参数AI模型的桌面超级计算机，面向需要本地部署AI能力的企业�?/p>
+                        <div class="card-meta">
+                            <span>📍 VentureBeat</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="timeline-item" data-category="company">
+                    <div class="timeline-date">2026-03-18</div>
+                    <div class="timeline-dot"></div>
+                    <div class="card">
+                        <div class="card-header">
+                            <span class="category-tag category-company">公司动向</span>
+                        </div>
+                        <h3 class="card-title"><a href="https://venturebeat.com/technology/nvidia-launches-enterprise-ai-agent-platform-with-adobe-salesforce-sap-among" target="_blank">Nvidia发布企业AI Agent平台�?7家企业首批采�?/a></h3>
+                        <p class="card-desc">首批合作客户包括Adobe、Salesforce、SAP、ServiceNow、Siemens�?7家企业软件公司，覆盖各行业财�?00强�?/p>
+                        <div class="card-meta">
+                            <span>📍 VentureBeat</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="timeline-item" data-category="company">
+                    <div class="timeline-date">2026-03-18</div>
+                    <div class="timeline-dot"></div>
+                    <div class="card">
+                        <div class="card-header">
+                            <span class="category-tag category-company">公司动向</span>
+                        </div>
+                        <h3 class="card-title"><a href="https://www.theverge.com/ai-artificial-intelligence/893189/openai-chatgpt-sora-integration" target="_blank">OpenAI精简业务：优先编程和企业用户</a></h3>
+                        <p class="card-desc">CEO Fidji Simo宣布公司战略调整，将优先考虑编码和企业用户，削减Sora AI视频、Atlas浏览器等非核心项目�?/p>
+                        <div class="card-meta">
+                            <span>📍 The Verge</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="timeline-item" data-category="tech">
+                    <div class="timeline-date">2026-03-18</div>
+                    <div class="timeline-dot"></div>
+                    <div class="card">
+                        <div class="card-header">
+                            <span class="category-tag category-tech">安全与隐�?/span>
+                        </div>
+                        <h3 class="card-title"><a href="https://www.theverge.com/ai-artificial-intelligence/895363/nvidia-nemoclaw-privacy-security-autonomous-agents" target="_blank">Nvidia推出NemoClaw：更安全的自主AI平台</a></h3>
+                        <p class="card-desc">通过隔离沙箱环境为自主AI agents提供数据隐私和安全保障，解决企业部署AI agents的安全顾虑�?/p>
+                        <div class="card-meta">
+                            <span>📍 The Verge</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="timeline-item" data-category="product">
+                    <div class="timeline-date">2026-03-18</div>
+                    <div class="timeline-dot"></div>
+                    <div class="card">
+                        <div class="card-header">
+                            <span class="category-tag category-product">产品发布</span>
+                        </div>
+                        <h3 class="card-title"><a href="https://www.theverge.com/tech/894135/amazons-sassy-personality-style-for-alexa-plus-has-a-lot-of-warning-labels" target="_blank">Amazon Alexa推出"Sassy"性格</a></h3>
+                        <p class="card-desc">为Alexa Plus新增"犀利俏皮的讽刺风格"性格选项，仅面向成年用户，是第五种人格�?/p>
+                        <div class="card-meta">
+                            <span>📍 The Verge</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 2026-03-17 -->
+                <div class="timeline-item" data-category="llm">
+                    <div class="timeline-date">2026-03-17</div>
+                    <div class="timeline-dot"></div>
+                    <div class="card">
+                        <div class="card-header">
+                            <span class="category-tag category-llm">大模型动�?/span>
+                        </div>
+                        <h3 class="card-title"><a href="https://www.forbes.com/topics/enterprise-ai/" target="_blank">Nvidia发布NemoClaw开源AI代理平台</a></h3>
+                        <p class="card-desc">Nvidia将在GTC大会上发布NemoClaw，定位为开源AI代理平台，旨在代理AI时代确立其软件领导者地位�?/p>
+                        <div class="card-meta">
+                            <span>📍 NVIDIA</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="timeline-item" data-category="llm">
+                    <div class="timeline-date">2026-03-17</div>
+                    <div class="timeline-dot"></div>
+                    <div class="card">
+                        <div class="card-header">
+                            <span class="category-tag category-llm">大模型动�?/span>
+                        </div>
+                        <h3 class="card-title"><a href="http://nvidianews.nvidia.com/news/nvidia-expands-open-model-families" target="_blank">NVIDIA扩展Nemotron 3模型家族</a></h3>
+                        <p class="card-desc">发布Nemotron 3 omni-understanding模型，为AI代理提供自然对话、复杂推理和高级任务执行能力�?/p>
+                        <div class="card-meta">
+                            <span>📍 NVIDIA</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="timeline-item" data-category="tech">
+                    <div class="timeline-date">2026-03-17</div>
+                    <div class="timeline-dot"></div>
+                    <div class="card">
+                        <div class="card-header">
+                            <span class="category-tag category-tech">技术进�?/span>
+                        </div>
+                        <h3 class="card-title"><a href="https://techcrunch.com" target="_blank">MIT团队推出新型注意力机制，推理速度提升3�?/a></h3>
+                        <p class="card-desc">FlashAttention 3.0版本通过稀疏注意力与硬件协同优化，在保持精度的前提下实现显著性能提升�?/p>
+                        <div class="card-meta">
+                            <span>📍 TechCrunch</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="timeline-item" data-category="tech">
+                    <div class="timeline-date">2026-03-17</div>
+                    <div class="timeline-dot"></div>
+                    <div class="card">
+                        <div class="card-header">
+                            <span class="category-tag category-tech">技术进�?/span>
+                        </div>
+                        <h3 class="card-title"><a href="https://www.jiqizhixin.com" target="_blank">国产AI芯片新进�?/a></h3>
+                        <p class="card-desc">国产芯片在能效比上实现突破，达到国际先进水平�?/p>
+                        <div class="card-meta">
+                            <span>📍 机器之心</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="timeline-item" data-category="company">
+                    <div class="timeline-date">2026-03-17</div>
+                    <div class="timeline-dot"></div>
+                    <div class="card">
+                        <div class="card-header">
+                            <span class="category-tag category-company">公司动向</span>
+                        </div>
+                        <h3 class="card-title"><a href="https://reuters.com" target="_blank">Anthropic获Google 20亿美元投�?/a></h3>
+                        <p class="card-desc">双方将在AI安全研究、Claude模型优化等方面深化合作，Google Cloud将成为Anthropic主要算力供应商�?/p>
+                        <div class="card-meta">
+                            <span>📍 Reuters</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="timeline-item" data-category="company">
+                    <div class="timeline-date">2026-03-17</div>
+                    <div class="timeline-dot"></div>
+                    <div class="card">
+                        <div class="card-header">
+                            <span class="category-tag category-company">公司动向</span>
+                        </div>
+                        <h3 class="card-title"><a href="https://www.36kr.com" target="_blank">字节跳动宣布百亿级AI投资计划</a></h3>
+                        <p class="card-desc">字节跳动加码AI，重点布局大模型�?/p>
+                        <div class="card-meta">
+                            <span>📍 36�?/span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="timeline-item" data-category="product">
+                    <div class="timeline-date">2026-03-17</div>
+                    <div class="timeline-dot"></div>
+                    <div class="card">
+                        <div class="card-header">
+                            <span class="category-tag category-product">产品发布</span>
+                        </div>
+                        <h3 class="card-title"><a href="https://anthropic.com" target="_blank">Claude Desktop 3.0发布</a></h3>
+                        <p class="card-desc">新版Claude可自主完成代码编写、文件管理、终端命令执行等复杂任务，标志着AI助手向AI智能体的重要演进�?/p>
+                        <div class="card-meta">
+                            <span>📍 Anthropic</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="timeline-item" data-category="product">
+                    <div class="timeline-date">2026-03-17</div>
+                    <div class="timeline-dot"></div>
+                    <div class="card">
+                        <div class="card-header">
+                            <span class="category-tag category-product">产品发布</span>
+                        </div>
+                        <h3 class="card-title"><a href="https://www.qbitai.com" target="_blank">百度文心大模�?.0发布</a></h3>
+                        <p class="card-desc">新增多模态理解能力，API价格大幅下降�?/p>
+                        <div class="card-meta">
+                            <span>📍 量子�?/span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="timeline-item" data-category="application">
+                    <div class="timeline-date">2026-03-17</div>
+                    <div class="timeline-dot"></div>
+                    <div class="card">
+                        <div class="card-header">
+                            <span class="category-tag category-application">应用落地</span>
+                        </div>
+                        <h3 class="card-title"><a href="https://finance.yahoo.com/news/stock-market-today-march-16-224016933.html" target="_blank">SoundHound AI推出车载智能助手</a></h3>
+                        <p class="card-desc">在Nvidia GTC推出Edge Agentic+汽车助手，端侧AI在汽车领域应用落地�?/p>
+                        <div class="card-meta">
+                            <span>📍 Yahoo Finance</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="timeline-item" data-category="application">
+                    <div class="timeline-date">2026-03-17</div>
+                    <div class="timeline-dot"></div>
+                    <div class="card">
+                        <div class="card-header">
+                            <span class="category-tag category-application">应用落地</span>
+                        </div>
+                        <h3 class="card-title"><a href="https://www.amd.com/en/newsroom/press-releases/2026-3-16-amd-and-celestica-announce-collaboration" target="_blank">AMD与Celestica合作推出Helios机架级AI平台</a></h3>
+                        <p class="card-desc">基于开放标准的"Helios"机架级AI平台，推动下一代AI基础设施建设�?/p>
+                        <div class="card-meta">
+                            <span>📍 AMD</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="timeline-item" data-category="application">
+                    <div class="timeline-date">2026-03-17</div>
+                    <div class="timeline-dot"></div>
+                    <div class="card">
+                        <div class="card-header">
+                            <span class="category-tag category-application">应用落地</span>
+                        </div>
+                        <h3 class="card-title"><a href="https://www.36kr.com" target="_blank">全国首例AI辅助手术获批</a></h3>
+                        <p class="card-desc">三甲医院将引入达芬奇AI系统，已通过药监局三类医疗器械审批�?/p>
+                        <div class="card-meta">
+                            <span>📍 36�?/span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="timeline-item" data-category="industry">
+                    <div class="timeline-date">2026-03-17</div>
+                    <div class="timeline-dot"></div>
+                    <div class="card">
+                        <div class="card-header">
+                            <span class="category-tag category-industry">行业观察</span>
+                        </div>
+                        <h3 class="card-title"><a href="https://www.cnbc.com/2026/03/16/bill-gurley-ai-bubble-get-rich-quick.html" target="_blank">顶级风投Bill Gurley警告AI泡沫</a></h3>
+                        <p class="card-desc">知名风投警告AI行业存在泡沫�?很多人快速致富，调整即将到来"�?/p>
+                        <div class="card-meta">
+                            <span>📍 CNBC</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="timeline-item" data-category="industry">
+                    <div class="timeline-date">2026-03-17</div>
+                    <div class="timeline-dot"></div>
+                    <div class="card">
+                        <div class="card-header">
+                            <span class="category-tag category-industry">行业观察</span>
+                        </div>
+                        <h3 class="card-title"><a href="https://idc.com" target="_blank">2026年AI算力市场规模将突�?000亿美�?/a></h3>
+                        <p class="card-desc">根据IDC最新报告，受益于大模型训练和推理需求激增，全球AI基础设施投资同比增长67%，中国占比达28%�?/p>
+                        <div class="card-meta">
+                            <span>📍 IDC</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="timeline-item" data-category="industry">
+                    <div class="timeline-date">2026-03-17</div>
+                    <div class="timeline-dot"></div>
+                    <div class="card">
+                        <div class="card-header">
+                            <span class="category-tag category-industry">行业观察</span>
+                        </div>
+                        <h3 class="card-title"><a href="https://www.jiqizhixin.com" target="_blank">中国AI政策新动�?/a></h3>
+                        <p class="card-desc">国家出台AI发展专项规划，聚焦核心技术自主可控�?/p>
+                        <div class="card-meta">
+                            <span>📍 机器之心</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- LLM -->
+        <div class="tab-content" id="llm">
+            <div class="timeline">
+                <!-- 2026-03-18 -->
+                <div class="timeline-item" data-category="llm">
+                    <div class="timeline-date">2026-03-18</div>
+                    <div class="timeline-dot"></div>
+                    <div class="card">
+                        <div class="card-header">
+                            <span class="category-tag category-llm">大模型动�?/span>
+                        </div>
+                        <h3 class="card-title"><a href="https://venturebeat.com/infrastructure/nvidia-introduces-vera-rubin-a-seven-chip-ai-platform-with-openai-anthropic" target="_blank">Nvidia发布Vera Rubin平台：史上最强AI芯片</a></h3>
+                        <p class="card-desc">采用7芯片设计，推理吞吐量较Blackwell提升10倍�?/p>
+                        <div class="card-meta">
+                            <span>📍 VentureBeat</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="timeline-item" data-category="llm">
+                    <div class="timeline-date">2026-03-18</div>
+                    <div class="timeline-dot"></div>
+                    <div class="card">
+                        <div class="card-header">
+                            <span class="category-tag category-llm">大模型动�?/span>
+                        </div>
+                        <h3 class="card-title"><a href="https://venturebeat.com/infrastructure/nvidias-dgx-station-is-a-desktop-supercomputer-that-runs-trillion-parameter" target="_blank">Nvidia推出DGX Station桌面超级计算�?/a></h3>
+                        <p class="card-desc">可在单个工程师桌面上运行万亿参数AI模型�?/p>
+                        <div class="card-meta">
+                            <span>📍 VentureBeat</span>
+                        </div>
+                    </div>
+                </div>
+                <!-- 2026-03-17 -->
+                <div class="timeline-item" data-category="llm">
+                    <div class="timeline-date">2026-03-17</div>
+                    <div class="timeline-dot"></div>
+                    <div class="card">
+                        <div class="card-header">
+                            <span class="category-tag category-llm">大模型动�?/span>
+                        </div>
+                        <h3 class="card-title"><a href="https://www.forbes.com/topics/enterprise-ai/" target="_blank">Nvidia发布NemoClaw开源AI代理平台</a></h3>
+                        <p class="card-desc">Nvidia将在GTC大会上发布NemoClaw，定位为开源AI代理平台�?/p>
+                        <div class="card-meta">
+                            <span>📍 NVIDIA</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="timeline-item" data-category="llm">
+                    <div class="timeline-date">2026-03-17</div>
+                    <div class="timeline-dot"></div>
+                    <div class="card">
+                        <div class="card-header">
+                            <span class="category-tag category-llm">大模型动�?/span>
+                        </div>
+                        <h3 class="card-title"><a href="http://nvidianews.nvidia.com/news/nvidia-expands-open-model-families" target="_blank">NVIDIA扩展Nemotron 3模型家族</a></h3>
+                        <p class="card-desc">发布Nemotron 3 omni-understanding模型，为AI代理提供自然对话能力�?/p>
+                        <div class="card-meta">
+                            <span>📍 NVIDIA</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Agent -->
+        <div class="tab-content" id="agent">
+            <div class="timeline">
+                <!-- 2026-03-18 -->
+                <div class="timeline-item" data-category="agent">
+                    <div class="timeline-date">2026-03-18</div>
+                    <div class="timeline-dot"></div>
+                    <div class="card">
+                        <div class="card-header">
+                            <span class="category-tag category-agent">智能�?/span>
+                        </div>
+                        <h3 class="card-title"><a href="https://venturebeat.com/technology/nvidia-launches-enterprise-ai-agent-platform-with-adobe-salesforce-sap-among" target="_blank">Nvidia发布企业AI Agent平台</a></h3>
+                        <p class="card-desc">开源Agent Toolkit平台�?7家企业首批采用，包括Adobe、Salesforce、SAP等�?/p>
+                        <div class="card-meta">
+                            <span>📍 VentureBeat</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="timeline-item" data-category="agent">
+                    <div class="timeline-date">2026-03-18</div>
+                    <div class="timeline-dot"></div>
+                    <div class="card">
+                        <div class="card-header">
+                            <span class="category-tag category-agent">智能�?/span>
+                        </div>
+                        <h3 class="card-title"><a href="https://www.theverge.com/ai-artificial-intelligence/895363/nvidia-nemoclaw-privacy-security-autonomous-agents" target="_blank">Nvidia NemoClaw安全智能�?/a></h3>
+                        <p class="card-desc">通过隔离沙箱环境为自主AI agents提供数据隐私和安全保障�?/p>
+                        <div class="card-meta">
+                            <span>📍 The Verge</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="timeline-item" data-category="agent">
+                    <div class="timeline-date">2026-03-17</div>
+                    <div class="timeline-dot"></div>
+                    <div class="card">
+                        <div class="card-header">
+                            <span class="category-tag category-agent">智能�?/span>
+                        </div>
+                        <h3 class="card-title"><a href="https://anthropic.com" target="_blank">Claude Desktop 3.0 智能体升�?/a></h3>
+                        <p class="card-desc">支持自主操作文件系统，标志AI助手向AI智能体演进�?/p>
+                        <div class="card-meta">
+                            <span>📍 Anthropic</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Tech -->
+        <div class="tab-content" id="tech">
+            <div class="timeline">
+                <!-- 2026-03-18 -->
+                <div class="timeline-item" data-category="tech">
+                    <div class="timeline-date">2026-03-18</div>
+                    <div class="timeline-dot"></div>
+                    <div class="card">
+                        <div class="card-header">
+                            <span class="category-tag category-tech">安全与隐�?/span>
+                        </div>
+                        <h3 class="card-title"><a href="https://www.theverge.com/ai-artificial-intelligence/895363/nvidia-nemoclaw-privacy-security-autonomous-agents" target="_blank">Nvidia推出NemoClaw：更安全的自主AI平台</a></h3>
+                        <p class="card-desc">通过隔离沙箱环境为自主AI agents提供数据隐私和安全保障�?/p>
+                        <div class="card-meta">
+                            <span>📍 The Verge</span>
+                        </div>
+                    </div>
+                </div>
+                <!-- 2026-03-17 -->
+                <div class="timeline-item" data-category="tech">
+                    <div class="timeline-date">2026-03-17</div>
+                    <div class="timeline-dot"></div>
+                    <div class="card">
+                        <div class="card-header">
+                            <span class="category-tag category-tech">技术进�?/span>
+                        </div>
+                        <h3 class="card-title"><a href="https://techcrunch.com" target="_blank">MIT团队推出新型注意力机制，推理速度提升3�?/a></h3>
+                        <p class="card-desc">FlashAttention 3.0版本通过稀疏注意力与硬件协同优化�?/p>
+                        <div class="card-meta">
+                            <span>📍 TechCrunch</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="timeline-item" data-category="tech">
+                    <div class="timeline-date">2026-03-17</div>
+                    <div class="timeline-dot"></div>
+                    <div class="card">
+                        <div class="card-header">
+                            <span class="category-tag category-tech">技术进�?/span>
+                        </div>
+                        <h3 class="card-title"><a href="https://www.jiqizhixin.com" target="_blank">国产AI芯片新进�?/a></h3>
+                        <p class="card-desc">国产芯片在能效比上实现突破，达到国际先进水平�?/p>
+                        <div class="card-meta">
+                            <span>📍 机器之心</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Company -->
+        <div class="tab-content" id="company">
+            <div class="timeline">
+                <!-- 2026-03-18 -->
+                <div class="timeline-item" data-category="company">
+                    <div class="timeline-date">2026-03-18</div>
+                    <div class="timeline-dot"></div>
+                    <div class="card">
+                        <div class="card-header">
+                            <span class="category-tag category-company">公司动向</span>
+                        </div>
+                        <h3 class="card-title"><a href="https://venturebeat.com/technology/nvidia-launches-enterprise-ai-agent-platform-with-adobe-salesforce-sap-among" target="_blank">Nvidia发布企业AI Agent平台�?7家企业首批采�?/a></h3>
+                        <p class="card-desc">首批合作客户包括Adobe、Salesforce、SAP�?7家企业软件公司�?/p>
+                        <div class="card-meta">
+                            <span>📍 VentureBeat</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="timeline-item" data-category="company">
+                    <div class="timeline-date">2026-03-18</div>
+                    <div class="timeline-dot"></div>
+                    <div class="card">
+                        <div class="card-header">
+                            <span class="category-tag category-company">公司动向</span>
+                        </div>
+                        <h3 class="card-title"><a href="https://www.theverge.com/ai-artificial-intelligence/893189/openai-chatgpt-sora-integration" target="_blank">OpenAI精简业务：优先编程和企业用户</a></h3>
+                        <p class="card-desc">CEO宣布战略调整，削减Sora AI视频等非核心项目�?/p>
+                        <div class="card-meta">
+                            <span>📍 The Verge</span>
+                        </div>
+                    </div>
+                </div>
+                <!-- 2026-03-17 -->
+                <div class="timeline-item" data-category="company">
+                    <div class="timeline-date">2026-03-17</div>
+                    <div class="timeline-dot"></div>
+                    <div class="card">
+                        <div class="card-header">
+                            <span class="category-tag category-company">公司动向</span>
+                        </div>
+                        <h3 class="card-title"><a href="https://reuters.com" target="_blank">Anthropic获Google 20亿美元投�?/a></h3>
+                        <p class="card-desc">估值突�?00亿，Google Cloud将成为主要算力供应商�?/p>
+                        <div class="card-meta">
+                            <span>📍 Reuters</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="timeline-item" data-category="company">
+                    <div class="timeline-date">2026-03-17</div>
+                    <div class="timeline-dot"></div>
+                    <div class="card">
+                        <div class="card-header">
+                            <span class="category-tag category-company">公司动向</span>
+                        </div>
+                        <h3 class="card-title"><a href="https://www.36kr.com" target="_blank">字节跳动宣布百亿级AI投资计划</a></h3>
+                        <p class="card-desc">字节跳动加码AI，重点布局大模型�?/p>
+                        <div class="card-meta">
+                            <span>📍 36�?/span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Product -->
+        <div class="tab-content" id="product">
+            <div class="timeline">
+                <!-- 2026-03-18 -->
+                <div class="timeline-item" data-category="product">
+                    <div class="timeline-date">2026-03-18</div>
+                    <div class="timeline-dot"></div>
+                    <div class="card">
+                        <div class="card-header">
+                            <span class="category-tag category-product">产品发布</span>
+                        </div>
+                        <h3 class="card-title"><a href="https://www.theverge.com/tech/894135/amazons-sassy-personality-style-for-alexa-plus-has-a-lot-of-warning-labels" target="_blank">Amazon Alexa推出"Sassy"性格</a></h3>
+                        <p class="card-desc">新增"犀利俏皮的讽刺风格"性格选项，仅面向成年用户�?/p>
+                        <div class="card-meta">
+                            <span>📍 The Verge</span>
+                        </div>
+                    </div>
+                </div>
+                <!-- 2026-03-17 -->
+                <div class="timeline-item" data-category="product">
+                    <div class="timeline-date">2026-03-17</div>
+                    <div class="timeline-dot"></div>
+                    <div class="card">
+                        <div class="card-header">
+                            <span class="category-tag category-product">产品发布</span>
+                        </div>
+                        <h3 class="card-title"><a href="https://anthropic.com" target="_blank">Claude Desktop 3.0发布</a></h3>
+                        <p class="card-desc">支持自主操作文件系统，标志AI助手向AI智能体演进�?/p>
+                        <div class="card-meta">
+                            <span>📍 Anthropic</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="timeline-item" data-category="product">
+                    <div class="timeline-date">2026-03-17</div>
+                    <div class="timeline-dot"></div>
+                    <div class="card">
+                        <div class="card-header">
+                            <span class="category-tag category-product">产品发布</span>
+                        </div>
+                        <h3 class="card-title"><a href="https://www.qbitai.com" target="_blank">百度文心大模�?.0发布</a></h3>
+                        <p class="card-desc">新增多模态理解能力，API价格大幅下降�?/p>
+                        <div class="card-meta">
+                            <span>📍 量子�?/span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Application -->
+        <div class="tab-content" id="application">
+            <div class="timeline">
+                <!-- 2026-03-18 -暂无新数�?-->
+                <!-- 2026-03-17 -->
+                <div class="timeline-item" data-category="application">
+                    <div class="timeline-date">2026-03-17</div>
+                    <div class="timeline-dot"></div>
+                    <div class="card">
+                        <div class="card-header">
+                            <span class="category-tag category-application">应用落地</span>
+                        </div>
+                        <h3 class="card-title"><a href="https://finance.yahoo.com/news/stock-market-today-march-16-224016933.html" target="_blank">SoundHound AI推出车载智能助手</a></h3>
+                        <p class="card-desc">Edge Agentic+汽车助手，端侧AI在汽车领域应用落地�?/p>
+                        <div class="card-meta">
+                            <span>📍 Yahoo Finance</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="timeline-item" data-category="application">
+                    <div class="timeline-date">2026-03-17</div>
+                    <div class="timeline-dot"></div>
+                    <div class="card">
+                        <div class="card-header">
+                            <span class="category-tag category-application">应用落地</span>
+                        </div>
+                        <h3 class="card-title"><a href="https://www.amd.com/en/newsroom/press-releases/2026-3-16-amd-and-celestica-announce-collaboration" target="_blank">AMD与Celestica合作推出Helios机架级AI平台</a></h3>
+                        <p class="card-desc">基于开放标准的机架级AI平台�?/p>
+                        <div class="card-meta">
+                            <span>📍 AMD</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="timeline-item" data-category="application">
+                    <div class="timeline-date">2026-03-17</div>
+                    <div class="timeline-dot"></div>
+                    <div class="card">
+                        <div class="card-header">
+                            <span class="category-tag category-application">应用落地</span>
+                        </div>
+                        <h3 class="card-title"><a href="https://www.36kr.com" target="_blank">全国首例AI辅助手术获批</a></h3>
+                        <p class="card-desc">三甲医院将引入达芬奇AI系统，已通过药监局审批�?/p>
+                        <div class="card-meta">
+                            <span>📍 36�?/span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Industry -->
+        <div class="tab-content" id="industry">
+            <div class="timeline">
+                <!-- 2026-03-18 -暂无新数�?-->
+                <!-- 2026-03-17 -->
+                <div class="timeline-item" data-category="industry">
+                    <div class="timeline-date">2026-03-17</div>
+                    <div class="timeline-dot"></div>
+                    <div class="card">
+                        <div class="card-header">
+                            <span class="category-tag category-industry">行业观察</span>
+                        </div>
+                        <h3 class="card-title"><a href="https://www.cnbc.com/2026/03/16/bill-gurley-ai-bubble-get-rich-quick.html" target="_blank">顶级风投Bill Gurley警告AI泡沫</a></h3>
+                        <p class="card-desc">知名风投警告AI行业存在泡沫�?/p>
+                        <div class="card-meta">
+                            <span>📍 CNBC</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="timeline-item" data-category="industry">
+                    <div class="timeline-date">2026-03-17</div>
+                    <div class="timeline-dot"></div>
+                    <div class="card">
+                        <div class="card-header">
+                            <span class="category-tag category-industry">行业观察</span>
+                        </div>
+                        <h3 class="card-title"><a href="https://idc.com" target="_blank">2026年AI算力市场规模将突�?000亿美�?/a></h3>
+                        <p class="card-desc">全球AI基础设施投资同比增长67%，中国占比达28%�?/p>
+                        <div class="card-meta">
+                            <span>📍 IDC</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="timeline-item" data-category="industry">
+                    <div class="timeline-date">2026-03-17</div>
+                    <div class="timeline-dot"></div>
+                    <div class="card">
+                        <div class="card-header">
+                            <span class="category-tag category-industry">行业观察</span>
+                        </div>
+                        <h3 class="card-title"><a href="https://www.jiqizhixin.com" target="_blank">中国AI政策新动�?/a></h3>
+                        <p class="card-desc">国家出台AI发展专项规划，聚焦核心技术自主可控�?/p>
+                        <div class="card-meta">
+                            <span>📍 机器之心</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <footer>
+            <p>© 2026 AI每日日报 · 聚焦AI行业最新动�?/p>
+        </footer>
+    </div>
+
+    <script>
+        // Tab switching
+        document.querySelectorAll('.tab').forEach(tab => {
+            tab.addEventListener('click', () => {
+                // Remove active from all tabs
+                document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+                // Add active to clicked tab
+                tab.classList.add('active');
+
+                // Hide all tab content
+                document.querySelectorAll('.tab-content').forEach(content => {
+                    content.classList.remove('active');
+                });
+
+                // Show selected tab content
+                const tabId = tab.dataset.tab;
+                document.getElementById(tabId).classList.add('active');
+
+                // Re-trigger animations
+                const items = document.querySelectorAll(`#${tabId} .timeline-item`);
+                items.forEach((item, index) => {
+                    item.style.animation = 'none';
+                    item.offsetHeight; // Trigger reflow
+                    item.style.animation = `fadeInUp 0.5s ease forwards ${index * 0.05}s`;
+                });
+            });
+        });
+
+        // Card click handling
+        document.querySelectorAll('.card').forEach(card => {
+            card.addEventListener('click', (e) => {
+                const link = card.querySelector('.card-title a');
+                if (link && link.href && link.href !== window.location.href + '#') {
+                    window.open(link.href, '_blank');
+                }
+            });
+        });
+    </script>
+</body>
+</html>
+
+
+
+
+
