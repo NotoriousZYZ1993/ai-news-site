@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="zh-CN">
 <head>
     <meta charset="UTF-8">
@@ -139,71 +139,101 @@
             box-shadow: 0 2px 8px rgba(0, 122, 255, 0.3);
         }
 
-        /* Timeline - 简洁时间轴 */
+        /* Timeline */
         .timeline {
             position: relative;
-            padding-left: 40px;
-            background: transparent;
-            border-radius: 0;
+            padding-left: 80px;
         }
 
         .timeline::before {
             content: '';
             position: absolute;
-            left: 12px;
+            left: 35px;
             top: 0;
             bottom: 0;
-            width: 2px;
-            background: #E5E5EA;
-            border-radius: 2px;
+            border-left: 1px dashed #C7D2FE;
         }
 
         .timeline-item {
             position: relative;
-            margin-bottom: 16px;
+            margin-bottom: 24px;
         }
 
-        .timeline-date, .timeline-dot {
-            display: none;
+        .timeline-date {
+            position: absolute;
+            left: -80px;
+            top: 20px;
+            width: 60px;
+            text-align: right;
+            font-size: 13px;
+            font-weight: 600;
+            color: var(--text-secondary);
+        }
+
+        .timeline-dot {
+            position: absolute;
+            left: -53px;
+            top: 24px;
+            width: 6px;
+            height: 6px;
+            background: #C7D2FE;
+            border: 2px solid #fff;
+            border-radius: 50%;
+            z-index: 1;
+        }
+
+        .timeline-item:nth-child(even) .timeline-dot {
+            border-color: var(--secondary);
+        }
+
+        .timeline-item:nth-child(3n) .timeline-dot {
+            border-color: var(--success);
+        }
+
+        .timeline-item:nth-child(4n) .timeline-dot {
+            border-color: var(--accent);
         }
 
         /* Card */
         .card {
-            background: #FFFFFF;
-            border-radius: 14px;
-            padding: 16px 20px;
-            box-shadow: 0 1px 4px rgba(0,0,0,0.08);
-            transition: all 0.2s ease;
+            background: var(--bg-card);
+            border-radius: var(--radius-lg);
+            padding: 20px 24px;
+            box-shadow: var(--shadow-sm);
+            transition: var(--transition);
             cursor: pointer;
-            border: 1px solid #F0F0F0;
+            border: 1px solid transparent;
         }
 
         .card:hover {
-            box-shadow: 0 3px 12px rgba(0,0,0,0.1);
             transform: translateY(-2px);
+            box-shadow: var(--shadow-lg);
+            border-color: var(--primary-light);
+            background: var(--bg-card-hover);
         }
 
         .card-header {
             display: flex;
             align-items: center;
             gap: 10px;
-            margin-bottom: 10px;
+            margin-bottom: 12px;
         }
 
         .category-tag {
-            padding: 4px 12px;
-            border-radius: 12px;
-            font-size: 12px;
+            padding: 4px 10px;
+            border-radius: 20px;
+            font-size: 11px;
             font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
         }
 
         .category-llm { background: #E3F2FD; color: #1976D2; }
         .category-tech { background: #F3E5F5; color: #7B1FA2; }
-        .category-company { background: #FFF3E0; color: #E65100; }
-        .category-product { background: #FFF8E1; color: #FF8F00; }
-        .category-application { background: #E0F2F1; color: #00796B; }
+        .category-company { background: #E8F5E9; color: #388E3C; }
+        .category-product { background: #FFF3E0; color: #F57C00; }
+        .category-application { background: #E0F7FA; color: #00838F; }
         .category-industry { background: #FCE4EC; color: #C2185B; }
-        .category-agent { background: #EDE7F6; color: #673AB7; }
 
         .card-title {
             font-size: 17px;
@@ -356,15 +386,14 @@
                 </div>
                 <h1>AI每日日报</h1>
             </div>
-            <p class="subtitle">每天更新，聚焦AI行业最新动�?/p>
+            <p class="subtitle">每天更新，聚焦AI行业最新动态</p>
         </header>
 
         <div class="tabs-wrapper">
             <div class="tabs">
                 <button class="tab active" data-tab="all">全部</button>
-                <button class="tab" data-tab="llm">大模型动�?/button>
-                <button class="tab" data-tab="agent">智能�?/button>
-                <button class="tab" data-tab="tech">技术进�?/button>
+                <button class="tab" data-tab="llm">大模型动态</button>
+                <button class="tab" data-tab="tech">技术进展</button>
                 <button class="tab" data-tab="company">公司动向</button>
                 <button class="tab" data-tab="product">产品发布</button>
                 <button class="tab" data-tab="application">应用落地</button>
@@ -375,107 +404,15 @@
         <!-- All -->
         <div class="tab-content active" id="all">
             <div class="timeline">
-                <!-- 2026-03-18 -->
-                <div class="timeline-item" data-category="llm">
-                    <div class="timeline-date">2026-03-18</div>
-                    <div class="timeline-dot"></div>
-                    <div class="card">
-                        <div class="card-header">
-                            <span class="category-tag category-llm">大模型动�?/span>
-                        </div>
-                        <h3 class="card-title"><a href="https://venturebeat.com/infrastructure/nvidia-introduces-vera-rubin-a-seven-chip-ai-platform-with-openai-anthropic" target="_blank">Nvidia发布Vera Rubin平台：史上最强AI芯片</a></h3>
-                        <p class="card-desc">Nvidia在GTC 2026大会上发布全新Vera Rubin平台，采�?芯片设计，推理吞吐量较Blackwell提升10倍，能源效率大幅优化�?/p>
-                        <div class="card-meta">
-                            <span>📍 VentureBeat</span>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="timeline-item" data-category="llm">
-                    <div class="timeline-date">2026-03-18</div>
-                    <div class="timeline-dot"></div>
-                    <div class="card">
-                        <div class="card-header">
-                            <span class="category-tag category-llm">大模型动�?/span>
-                        </div>
-                        <h3 class="card-title"><a href="https://venturebeat.com/infrastructure/nvidias-dgx-station-is-a-desktop-supercomputer-that-runs-trillion-parameter" target="_blank">Nvidia推出DGX Station桌面超级计算�?/a></h3>
-                        <p class="card-desc">一款可在单个工程师桌面上运行万亿参数AI模型的桌面超级计算机，面向需要本地部署AI能力的企业�?/p>
-                        <div class="card-meta">
-                            <span>📍 VentureBeat</span>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="timeline-item" data-category="company">
-                    <div class="timeline-date">2026-03-18</div>
-                    <div class="timeline-dot"></div>
-                    <div class="card">
-                        <div class="card-header">
-                            <span class="category-tag category-company">公司动向</span>
-                        </div>
-                        <h3 class="card-title"><a href="https://venturebeat.com/technology/nvidia-launches-enterprise-ai-agent-platform-with-adobe-salesforce-sap-among" target="_blank">Nvidia发布企业AI Agent平台�?7家企业首批采�?/a></h3>
-                        <p class="card-desc">首批合作客户包括Adobe、Salesforce、SAP、ServiceNow、Siemens�?7家企业软件公司，覆盖各行业财�?00强�?/p>
-                        <div class="card-meta">
-                            <span>📍 VentureBeat</span>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="timeline-item" data-category="company">
-                    <div class="timeline-date">2026-03-18</div>
-                    <div class="timeline-dot"></div>
-                    <div class="card">
-                        <div class="card-header">
-                            <span class="category-tag category-company">公司动向</span>
-                        </div>
-                        <h3 class="card-title"><a href="https://www.theverge.com/ai-artificial-intelligence/893189/openai-chatgpt-sora-integration" target="_blank">OpenAI精简业务：优先编程和企业用户</a></h3>
-                        <p class="card-desc">CEO Fidji Simo宣布公司战略调整，将优先考虑编码和企业用户，削减Sora AI视频、Atlas浏览器等非核心项目�?/p>
-                        <div class="card-meta">
-                            <span>📍 The Verge</span>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="timeline-item" data-category="tech">
-                    <div class="timeline-date">2026-03-18</div>
-                    <div class="timeline-dot"></div>
-                    <div class="card">
-                        <div class="card-header">
-                            <span class="category-tag category-tech">安全与隐�?/span>
-                        </div>
-                        <h3 class="card-title"><a href="https://www.theverge.com/ai-artificial-intelligence/895363/nvidia-nemoclaw-privacy-security-autonomous-agents" target="_blank">Nvidia推出NemoClaw：更安全的自主AI平台</a></h3>
-                        <p class="card-desc">通过隔离沙箱环境为自主AI agents提供数据隐私和安全保障，解决企业部署AI agents的安全顾虑�?/p>
-                        <div class="card-meta">
-                            <span>📍 The Verge</span>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="timeline-item" data-category="product">
-                    <div class="timeline-date">2026-03-18</div>
-                    <div class="timeline-dot"></div>
-                    <div class="card">
-                        <div class="card-header">
-                            <span class="category-tag category-product">产品发布</span>
-                        </div>
-                        <h3 class="card-title"><a href="https://www.theverge.com/tech/894135/amazons-sassy-personality-style-for-alexa-plus-has-a-lot-of-warning-labels" target="_blank">Amazon Alexa推出"Sassy"性格</a></h3>
-                        <p class="card-desc">为Alexa Plus新增"犀利俏皮的讽刺风格"性格选项，仅面向成年用户，是第五种人格�?/p>
-                        <div class="card-meta">
-                            <span>📍 The Verge</span>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- 2026-03-17 -->
                 <div class="timeline-item" data-category="llm">
                     <div class="timeline-date">2026-03-17</div>
                     <div class="timeline-dot"></div>
                     <div class="card">
                         <div class="card-header">
-                            <span class="category-tag category-llm">大模型动�?/span>
+                            <span class="category-tag category-llm">大模型动态</span>
                         </div>
                         <h3 class="card-title"><a href="https://www.forbes.com/topics/enterprise-ai/" target="_blank">Nvidia发布NemoClaw开源AI代理平台</a></h3>
-                        <p class="card-desc">Nvidia将在GTC大会上发布NemoClaw，定位为开源AI代理平台，旨在代理AI时代确立其软件领导者地位�?/p>
+                        <p class="card-desc">Nvidia将在GTC大会上发布NemoClaw，定位为开源AI代理平台，旨在代理AI时代确立其软件领导者地位。</p>
                         <div class="card-meta">
                             <span>📍 NVIDIA</span>
                         </div>
@@ -487,10 +424,10 @@
                     <div class="timeline-dot"></div>
                     <div class="card">
                         <div class="card-header">
-                            <span class="category-tag category-llm">大模型动�?/span>
+                            <span class="category-tag category-llm">大模型动态</span>
                         </div>
                         <h3 class="card-title"><a href="http://nvidianews.nvidia.com/news/nvidia-expands-open-model-families" target="_blank">NVIDIA扩展Nemotron 3模型家族</a></h3>
-                        <p class="card-desc">发布Nemotron 3 omni-understanding模型，为AI代理提供自然对话、复杂推理和高级任务执行能力�?/p>
+                        <p class="card-desc">发布Nemotron 3 omni-understanding模型，为AI代理提供自然对话、复杂推理和高级任务执行能力。</p>
                         <div class="card-meta">
                             <span>📍 NVIDIA</span>
                         </div>
@@ -502,10 +439,10 @@
                     <div class="timeline-dot"></div>
                     <div class="card">
                         <div class="card-header">
-                            <span class="category-tag category-tech">技术进�?/span>
+                            <span class="category-tag category-tech">技术进展</span>
                         </div>
-                        <h3 class="card-title"><a href="https://techcrunch.com" target="_blank">MIT团队推出新型注意力机制，推理速度提升3�?/a></h3>
-                        <p class="card-desc">FlashAttention 3.0版本通过稀疏注意力与硬件协同优化，在保持精度的前提下实现显著性能提升�?/p>
+                        <h3 class="card-title"><a href="https://techcrunch.com" target="_blank">MIT团队推出新型注意力机制，推理速度提升3倍</a></h3>
+                        <p class="card-desc">FlashAttention 3.0版本通过稀疏注意力与硬件协同优化，在保持精度的前提下实现显著性能提升。</p>
                         <div class="card-meta">
                             <span>📍 TechCrunch</span>
                         </div>
@@ -517,10 +454,10 @@
                     <div class="timeline-dot"></div>
                     <div class="card">
                         <div class="card-header">
-                            <span class="category-tag category-tech">技术进�?/span>
+                            <span class="category-tag category-tech">技术进展</span>
                         </div>
-                        <h3 class="card-title"><a href="https://www.jiqizhixin.com" target="_blank">国产AI芯片新进�?/a></h3>
-                        <p class="card-desc">国产芯片在能效比上实现突破，达到国际先进水平�?/p>
+                        <h3 class="card-title"><a href="https://www.jiqizhixin.com" target="_blank">国产AI芯片新进展</a></h3>
+                        <p class="card-desc">国产芯片在能效比上实现突破，达到国际先进水平。</p>
                         <div class="card-meta">
                             <span>📍 机器之心</span>
                         </div>
@@ -534,8 +471,8 @@
                         <div class="card-header">
                             <span class="category-tag category-company">公司动向</span>
                         </div>
-                        <h3 class="card-title"><a href="https://reuters.com" target="_blank">Anthropic获Google 20亿美元投�?/a></h3>
-                        <p class="card-desc">双方将在AI安全研究、Claude模型优化等方面深化合作，Google Cloud将成为Anthropic主要算力供应商�?/p>
+                        <h3 class="card-title"><a href="https://reuters.com" target="_blank">Anthropic获Google 20亿美元投资</a></h3>
+                        <p class="card-desc">双方将在AI安全研究、Claude模型优化等方面深化合作，Google Cloud将成为Anthropic主要算力供应商。</p>
                         <div class="card-meta">
                             <span>📍 Reuters</span>
                         </div>
@@ -550,9 +487,9 @@
                             <span class="category-tag category-company">公司动向</span>
                         </div>
                         <h3 class="card-title"><a href="https://www.36kr.com" target="_blank">字节跳动宣布百亿级AI投资计划</a></h3>
-                        <p class="card-desc">字节跳动加码AI，重点布局大模型�?/p>
+                        <p class="card-desc">字节跳动加码AI，重点布局大模型。</p>
                         <div class="card-meta">
-                            <span>📍 36�?/span>
+                            <span>📍 36氪</span>
                         </div>
                     </div>
                 </div>
@@ -565,7 +502,7 @@
                             <span class="category-tag category-product">产品发布</span>
                         </div>
                         <h3 class="card-title"><a href="https://anthropic.com" target="_blank">Claude Desktop 3.0发布</a></h3>
-                        <p class="card-desc">新版Claude可自主完成代码编写、文件管理、终端命令执行等复杂任务，标志着AI助手向AI智能体的重要演进�?/p>
+                        <p class="card-desc">新版Claude可自主完成代码编写、文件管理、终端命令执行等复杂任务，标志着AI助手向AI智能体的重要演进。</p>
                         <div class="card-meta">
                             <span>📍 Anthropic</span>
                         </div>
@@ -579,10 +516,10 @@
                         <div class="card-header">
                             <span class="category-tag category-product">产品发布</span>
                         </div>
-                        <h3 class="card-title"><a href="https://www.qbitai.com" target="_blank">百度文心大模�?.0发布</a></h3>
-                        <p class="card-desc">新增多模态理解能力，API价格大幅下降�?/p>
+                        <h3 class="card-title"><a href="https://www.qbitai.com" target="_blank">百度文心大模型4.0发布</a></h3>
+                        <p class="card-desc">新增多模态理解能力，API价格大幅下降。</p>
                         <div class="card-meta">
-                            <span>📍 量子�?/span>
+                            <span>📍 量子位</span>
                         </div>
                     </div>
                 </div>
@@ -595,7 +532,7 @@
                             <span class="category-tag category-application">应用落地</span>
                         </div>
                         <h3 class="card-title"><a href="https://finance.yahoo.com/news/stock-market-today-march-16-224016933.html" target="_blank">SoundHound AI推出车载智能助手</a></h3>
-                        <p class="card-desc">在Nvidia GTC推出Edge Agentic+汽车助手，端侧AI在汽车领域应用落地�?/p>
+                        <p class="card-desc">在Nvidia GTC推出Edge Agentic+汽车助手，端侧AI在汽车领域应用落地。</p>
                         <div class="card-meta">
                             <span>📍 Yahoo Finance</span>
                         </div>
@@ -610,7 +547,7 @@
                             <span class="category-tag category-application">应用落地</span>
                         </div>
                         <h3 class="card-title"><a href="https://www.amd.com/en/newsroom/press-releases/2026-3-16-amd-and-celestica-announce-collaboration" target="_blank">AMD与Celestica合作推出Helios机架级AI平台</a></h3>
-                        <p class="card-desc">基于开放标准的"Helios"机架级AI平台，推动下一代AI基础设施建设�?/p>
+                        <p class="card-desc">基于开放标准的"Helios"机架级AI平台，推动下一代AI基础设施建设。</p>
                         <div class="card-meta">
                             <span>📍 AMD</span>
                         </div>
@@ -625,9 +562,9 @@
                             <span class="category-tag category-application">应用落地</span>
                         </div>
                         <h3 class="card-title"><a href="https://www.36kr.com" target="_blank">全国首例AI辅助手术获批</a></h3>
-                        <p class="card-desc">三甲医院将引入达芬奇AI系统，已通过药监局三类医疗器械审批�?/p>
+                        <p class="card-desc">三甲医院将引入达芬奇AI系统，已通过药监局三类医疗器械审批。</p>
                         <div class="card-meta">
-                            <span>📍 36�?/span>
+                            <span>📍 36氪</span>
                         </div>
                     </div>
                 </div>
@@ -640,7 +577,7 @@
                             <span class="category-tag category-industry">行业观察</span>
                         </div>
                         <h3 class="card-title"><a href="https://www.cnbc.com/2026/03/16/bill-gurley-ai-bubble-get-rich-quick.html" target="_blank">顶级风投Bill Gurley警告AI泡沫</a></h3>
-                        <p class="card-desc">知名风投警告AI行业存在泡沫�?很多人快速致富，调整即将到来"�?/p>
+                        <p class="card-desc">知名风投警告AI行业存在泡沫，"很多人快速致富，调整即将到来"。</p>
                         <div class="card-meta">
                             <span>📍 CNBC</span>
                         </div>
@@ -654,8 +591,8 @@
                         <div class="card-header">
                             <span class="category-tag category-industry">行业观察</span>
                         </div>
-                        <h3 class="card-title"><a href="https://idc.com" target="_blank">2026年AI算力市场规模将突�?000亿美�?/a></h3>
-                        <p class="card-desc">根据IDC最新报告，受益于大模型训练和推理需求激增，全球AI基础设施投资同比增长67%，中国占比达28%�?/p>
+                        <h3 class="card-title"><a href="https://idc.com" target="_blank">2026年AI算力市场规模将突破5000亿美元</a></h3>
+                        <p class="card-desc">根据IDC最新报告，受益于大模型训练和推理需求激增，全球AI基础设施投资同比增长67%，中国占比达28%。</p>
                         <div class="card-meta">
                             <span>📍 IDC</span>
                         </div>
@@ -669,8 +606,8 @@
                         <div class="card-header">
                             <span class="category-tag category-industry">行业观察</span>
                         </div>
-                        <h3 class="card-title"><a href="https://www.jiqizhixin.com" target="_blank">中国AI政策新动�?/a></h3>
-                        <p class="card-desc">国家出台AI发展专项规划，聚焦核心技术自主可控�?/p>
+                        <h3 class="card-title"><a href="https://www.jiqizhixin.com" target="_blank">中国AI政策新动向</a></h3>
+                        <p class="card-desc">国家出台AI发展专项规划，聚焦核心技术自主可控。</p>
                         <div class="card-meta">
                             <span>📍 机器之心</span>
                         </div>
@@ -682,45 +619,15 @@
         <!-- LLM -->
         <div class="tab-content" id="llm">
             <div class="timeline">
-                <!-- 2026-03-18 -->
-                <div class="timeline-item" data-category="llm">
-                    <div class="timeline-date">2026-03-18</div>
-                    <div class="timeline-dot"></div>
-                    <div class="card">
-                        <div class="card-header">
-                            <span class="category-tag category-llm">大模型动�?/span>
-                        </div>
-                        <h3 class="card-title"><a href="https://venturebeat.com/infrastructure/nvidia-introduces-vera-rubin-a-seven-chip-ai-platform-with-openai-anthropic" target="_blank">Nvidia发布Vera Rubin平台：史上最强AI芯片</a></h3>
-                        <p class="card-desc">采用7芯片设计，推理吞吐量较Blackwell提升10倍�?/p>
-                        <div class="card-meta">
-                            <span>📍 VentureBeat</span>
-                        </div>
-                    </div>
-                </div>
-                <div class="timeline-item" data-category="llm">
-                    <div class="timeline-date">2026-03-18</div>
-                    <div class="timeline-dot"></div>
-                    <div class="card">
-                        <div class="card-header">
-                            <span class="category-tag category-llm">大模型动�?/span>
-                        </div>
-                        <h3 class="card-title"><a href="https://venturebeat.com/infrastructure/nvidias-dgx-station-is-a-desktop-supercomputer-that-runs-trillion-parameter" target="_blank">Nvidia推出DGX Station桌面超级计算�?/a></h3>
-                        <p class="card-desc">可在单个工程师桌面上运行万亿参数AI模型�?/p>
-                        <div class="card-meta">
-                            <span>📍 VentureBeat</span>
-                        </div>
-                    </div>
-                </div>
-                <!-- 2026-03-17 -->
                 <div class="timeline-item" data-category="llm">
                     <div class="timeline-date">2026-03-17</div>
                     <div class="timeline-dot"></div>
                     <div class="card">
                         <div class="card-header">
-                            <span class="category-tag category-llm">大模型动�?/span>
+                            <span class="category-tag category-llm">大模型动态</span>
                         </div>
                         <h3 class="card-title"><a href="https://www.forbes.com/topics/enterprise-ai/" target="_blank">Nvidia发布NemoClaw开源AI代理平台</a></h3>
-                        <p class="card-desc">Nvidia将在GTC大会上发布NemoClaw，定位为开源AI代理平台�?/p>
+                        <p class="card-desc">Nvidia将在GTC大会上发布NemoClaw，定位为开源AI代理平台。</p>
                         <div class="card-meta">
                             <span>📍 NVIDIA</span>
                         </div>
@@ -731,61 +638,12 @@
                     <div class="timeline-dot"></div>
                     <div class="card">
                         <div class="card-header">
-                            <span class="category-tag category-llm">大模型动�?/span>
+                            <span class="category-tag category-llm">大模型动态</span>
                         </div>
                         <h3 class="card-title"><a href="http://nvidianews.nvidia.com/news/nvidia-expands-open-model-families" target="_blank">NVIDIA扩展Nemotron 3模型家族</a></h3>
-                        <p class="card-desc">发布Nemotron 3 omni-understanding模型，为AI代理提供自然对话能力�?/p>
+                        <p class="card-desc">发布Nemotron 3 omni-understanding模型，为AI代理提供自然对话能力。</p>
                         <div class="card-meta">
                             <span>📍 NVIDIA</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- Agent -->
-        <div class="tab-content" id="agent">
-            <div class="timeline">
-                <!-- 2026-03-18 -->
-                <div class="timeline-item" data-category="agent">
-                    <div class="timeline-date">2026-03-18</div>
-                    <div class="timeline-dot"></div>
-                    <div class="card">
-                        <div class="card-header">
-                            <span class="category-tag category-agent">智能�?/span>
-                        </div>
-                        <h3 class="card-title"><a href="https://venturebeat.com/technology/nvidia-launches-enterprise-ai-agent-platform-with-adobe-salesforce-sap-among" target="_blank">Nvidia发布企业AI Agent平台</a></h3>
-                        <p class="card-desc">开源Agent Toolkit平台�?7家企业首批采用，包括Adobe、Salesforce、SAP等�?/p>
-                        <div class="card-meta">
-                            <span>📍 VentureBeat</span>
-                        </div>
-                    </div>
-                </div>
-                <div class="timeline-item" data-category="agent">
-                    <div class="timeline-date">2026-03-18</div>
-                    <div class="timeline-dot"></div>
-                    <div class="card">
-                        <div class="card-header">
-                            <span class="category-tag category-agent">智能�?/span>
-                        </div>
-                        <h3 class="card-title"><a href="https://www.theverge.com/ai-artificial-intelligence/895363/nvidia-nemoclaw-privacy-security-autonomous-agents" target="_blank">Nvidia NemoClaw安全智能�?/a></h3>
-                        <p class="card-desc">通过隔离沙箱环境为自主AI agents提供数据隐私和安全保障�?/p>
-                        <div class="card-meta">
-                            <span>📍 The Verge</span>
-                        </div>
-                    </div>
-                </div>
-                <div class="timeline-item" data-category="agent">
-                    <div class="timeline-date">2026-03-17</div>
-                    <div class="timeline-dot"></div>
-                    <div class="card">
-                        <div class="card-header">
-                            <span class="category-tag category-agent">智能�?/span>
-                        </div>
-                        <h3 class="card-title"><a href="https://anthropic.com" target="_blank">Claude Desktop 3.0 智能体升�?/a></h3>
-                        <p class="card-desc">支持自主操作文件系统，标志AI助手向AI智能体演进�?/p>
-                        <div class="card-meta">
-                            <span>📍 Anthropic</span>
                         </div>
                     </div>
                 </div>
@@ -795,31 +653,15 @@
         <!-- Tech -->
         <div class="tab-content" id="tech">
             <div class="timeline">
-                <!-- 2026-03-18 -->
-                <div class="timeline-item" data-category="tech">
-                    <div class="timeline-date">2026-03-18</div>
-                    <div class="timeline-dot"></div>
-                    <div class="card">
-                        <div class="card-header">
-                            <span class="category-tag category-tech">安全与隐�?/span>
-                        </div>
-                        <h3 class="card-title"><a href="https://www.theverge.com/ai-artificial-intelligence/895363/nvidia-nemoclaw-privacy-security-autonomous-agents" target="_blank">Nvidia推出NemoClaw：更安全的自主AI平台</a></h3>
-                        <p class="card-desc">通过隔离沙箱环境为自主AI agents提供数据隐私和安全保障�?/p>
-                        <div class="card-meta">
-                            <span>📍 The Verge</span>
-                        </div>
-                    </div>
-                </div>
-                <!-- 2026-03-17 -->
                 <div class="timeline-item" data-category="tech">
                     <div class="timeline-date">2026-03-17</div>
                     <div class="timeline-dot"></div>
                     <div class="card">
                         <div class="card-header">
-                            <span class="category-tag category-tech">技术进�?/span>
+                            <span class="category-tag category-tech">技术进展</span>
                         </div>
-                        <h3 class="card-title"><a href="https://techcrunch.com" target="_blank">MIT团队推出新型注意力机制，推理速度提升3�?/a></h3>
-                        <p class="card-desc">FlashAttention 3.0版本通过稀疏注意力与硬件协同优化�?/p>
+                        <h3 class="card-title"><a href="https://techcrunch.com" target="_blank">MIT团队推出新型注意力机制，推理速度提升3倍</a></h3>
+                        <p class="card-desc">FlashAttention 3.0版本通过稀疏注意力与硬件协同优化。</p>
                         <div class="card-meta">
                             <span>📍 TechCrunch</span>
                         </div>
@@ -830,10 +672,10 @@
                     <div class="timeline-dot"></div>
                     <div class="card">
                         <div class="card-header">
-                            <span class="category-tag category-tech">技术进�?/span>
+                            <span class="category-tag category-tech">技术进展</span>
                         </div>
-                        <h3 class="card-title"><a href="https://www.jiqizhixin.com" target="_blank">国产AI芯片新进�?/a></h3>
-                        <p class="card-desc">国产芯片在能效比上实现突破，达到国际先进水平�?/p>
+                        <h3 class="card-title"><a href="https://www.jiqizhixin.com" target="_blank">国产AI芯片新进展</a></h3>
+                        <p class="card-desc">国产芯片在能效比上实现突破，达到国际先进水平。</p>
                         <div class="card-meta">
                             <span>📍 机器之心</span>
                         </div>
@@ -845,36 +687,6 @@
         <!-- Company -->
         <div class="tab-content" id="company">
             <div class="timeline">
-                <!-- 2026-03-18 -->
-                <div class="timeline-item" data-category="company">
-                    <div class="timeline-date">2026-03-18</div>
-                    <div class="timeline-dot"></div>
-                    <div class="card">
-                        <div class="card-header">
-                            <span class="category-tag category-company">公司动向</span>
-                        </div>
-                        <h3 class="card-title"><a href="https://venturebeat.com/technology/nvidia-launches-enterprise-ai-agent-platform-with-adobe-salesforce-sap-among" target="_blank">Nvidia发布企业AI Agent平台�?7家企业首批采�?/a></h3>
-                        <p class="card-desc">首批合作客户包括Adobe、Salesforce、SAP�?7家企业软件公司�?/p>
-                        <div class="card-meta">
-                            <span>📍 VentureBeat</span>
-                        </div>
-                    </div>
-                </div>
-                <div class="timeline-item" data-category="company">
-                    <div class="timeline-date">2026-03-18</div>
-                    <div class="timeline-dot"></div>
-                    <div class="card">
-                        <div class="card-header">
-                            <span class="category-tag category-company">公司动向</span>
-                        </div>
-                        <h3 class="card-title"><a href="https://www.theverge.com/ai-artificial-intelligence/893189/openai-chatgpt-sora-integration" target="_blank">OpenAI精简业务：优先编程和企业用户</a></h3>
-                        <p class="card-desc">CEO宣布战略调整，削减Sora AI视频等非核心项目�?/p>
-                        <div class="card-meta">
-                            <span>📍 The Verge</span>
-                        </div>
-                    </div>
-                </div>
-                <!-- 2026-03-17 -->
                 <div class="timeline-item" data-category="company">
                     <div class="timeline-date">2026-03-17</div>
                     <div class="timeline-dot"></div>
@@ -882,8 +694,8 @@
                         <div class="card-header">
                             <span class="category-tag category-company">公司动向</span>
                         </div>
-                        <h3 class="card-title"><a href="https://reuters.com" target="_blank">Anthropic获Google 20亿美元投�?/a></h3>
-                        <p class="card-desc">估值突�?00亿，Google Cloud将成为主要算力供应商�?/p>
+                        <h3 class="card-title"><a href="https://reuters.com" target="_blank">Anthropic获Google 20亿美元投资</a></h3>
+                        <p class="card-desc">估值突破600亿，Google Cloud将成为主要算力供应商。</p>
                         <div class="card-meta">
                             <span>📍 Reuters</span>
                         </div>
@@ -897,9 +709,9 @@
                             <span class="category-tag category-company">公司动向</span>
                         </div>
                         <h3 class="card-title"><a href="https://www.36kr.com" target="_blank">字节跳动宣布百亿级AI投资计划</a></h3>
-                        <p class="card-desc">字节跳动加码AI，重点布局大模型�?/p>
+                        <p class="card-desc">字节跳动加码AI，重点布局大模型。</p>
                         <div class="card-meta">
-                            <span>📍 36�?/span>
+                            <span>📍 36氪</span>
                         </div>
                     </div>
                 </div>
@@ -909,22 +721,6 @@
         <!-- Product -->
         <div class="tab-content" id="product">
             <div class="timeline">
-                <!-- 2026-03-18 -->
-                <div class="timeline-item" data-category="product">
-                    <div class="timeline-date">2026-03-18</div>
-                    <div class="timeline-dot"></div>
-                    <div class="card">
-                        <div class="card-header">
-                            <span class="category-tag category-product">产品发布</span>
-                        </div>
-                        <h3 class="card-title"><a href="https://www.theverge.com/tech/894135/amazons-sassy-personality-style-for-alexa-plus-has-a-lot-of-warning-labels" target="_blank">Amazon Alexa推出"Sassy"性格</a></h3>
-                        <p class="card-desc">新增"犀利俏皮的讽刺风格"性格选项，仅面向成年用户�?/p>
-                        <div class="card-meta">
-                            <span>📍 The Verge</span>
-                        </div>
-                    </div>
-                </div>
-                <!-- 2026-03-17 -->
                 <div class="timeline-item" data-category="product">
                     <div class="timeline-date">2026-03-17</div>
                     <div class="timeline-dot"></div>
@@ -933,7 +729,7 @@
                             <span class="category-tag category-product">产品发布</span>
                         </div>
                         <h3 class="card-title"><a href="https://anthropic.com" target="_blank">Claude Desktop 3.0发布</a></h3>
-                        <p class="card-desc">支持自主操作文件系统，标志AI助手向AI智能体演进�?/p>
+                        <p class="card-desc">支持自主操作文件系统，标志AI助手向AI智能体演进。</p>
                         <div class="card-meta">
                             <span>📍 Anthropic</span>
                         </div>
@@ -946,10 +742,10 @@
                         <div class="card-header">
                             <span class="category-tag category-product">产品发布</span>
                         </div>
-                        <h3 class="card-title"><a href="https://www.qbitai.com" target="_blank">百度文心大模�?.0发布</a></h3>
-                        <p class="card-desc">新增多模态理解能力，API价格大幅下降�?/p>
+                        <h3 class="card-title"><a href="https://www.qbitai.com" target="_blank">百度文心大模型4.0发布</a></h3>
+                        <p class="card-desc">新增多模态理解能力，API价格大幅下降。</p>
                         <div class="card-meta">
-                            <span>📍 量子�?/span>
+                            <span>📍 量子位</span>
                         </div>
                     </div>
                 </div>
@@ -959,8 +755,6 @@
         <!-- Application -->
         <div class="tab-content" id="application">
             <div class="timeline">
-                <!-- 2026-03-18 -暂无新数�?-->
-                <!-- 2026-03-17 -->
                 <div class="timeline-item" data-category="application">
                     <div class="timeline-date">2026-03-17</div>
                     <div class="timeline-dot"></div>
@@ -969,7 +763,7 @@
                             <span class="category-tag category-application">应用落地</span>
                         </div>
                         <h3 class="card-title"><a href="https://finance.yahoo.com/news/stock-market-today-march-16-224016933.html" target="_blank">SoundHound AI推出车载智能助手</a></h3>
-                        <p class="card-desc">Edge Agentic+汽车助手，端侧AI在汽车领域应用落地�?/p>
+                        <p class="card-desc">Edge Agentic+汽车助手，端侧AI在汽车领域应用落地。</p>
                         <div class="card-meta">
                             <span>📍 Yahoo Finance</span>
                         </div>
@@ -983,7 +777,7 @@
                             <span class="category-tag category-application">应用落地</span>
                         </div>
                         <h3 class="card-title"><a href="https://www.amd.com/en/newsroom/press-releases/2026-3-16-amd-and-celestica-announce-collaboration" target="_blank">AMD与Celestica合作推出Helios机架级AI平台</a></h3>
-                        <p class="card-desc">基于开放标准的机架级AI平台�?/p>
+                        <p class="card-desc">基于开放标准的机架级AI平台。</p>
                         <div class="card-meta">
                             <span>📍 AMD</span>
                         </div>
@@ -997,9 +791,9 @@
                             <span class="category-tag category-application">应用落地</span>
                         </div>
                         <h3 class="card-title"><a href="https://www.36kr.com" target="_blank">全国首例AI辅助手术获批</a></h3>
-                        <p class="card-desc">三甲医院将引入达芬奇AI系统，已通过药监局审批�?/p>
+                        <p class="card-desc">三甲医院将引入达芬奇AI系统，已通过药监局审批。</p>
                         <div class="card-meta">
-                            <span>📍 36�?/span>
+                            <span>📍 36氪</span>
                         </div>
                     </div>
                 </div>
@@ -1009,8 +803,6 @@
         <!-- Industry -->
         <div class="tab-content" id="industry">
             <div class="timeline">
-                <!-- 2026-03-18 -暂无新数�?-->
-                <!-- 2026-03-17 -->
                 <div class="timeline-item" data-category="industry">
                     <div class="timeline-date">2026-03-17</div>
                     <div class="timeline-dot"></div>
@@ -1019,7 +811,7 @@
                             <span class="category-tag category-industry">行业观察</span>
                         </div>
                         <h3 class="card-title"><a href="https://www.cnbc.com/2026/03/16/bill-gurley-ai-bubble-get-rich-quick.html" target="_blank">顶级风投Bill Gurley警告AI泡沫</a></h3>
-                        <p class="card-desc">知名风投警告AI行业存在泡沫�?/p>
+                        <p class="card-desc">知名风投警告AI行业存在泡沫。</p>
                         <div class="card-meta">
                             <span>📍 CNBC</span>
                         </div>
@@ -1032,8 +824,8 @@
                         <div class="card-header">
                             <span class="category-tag category-industry">行业观察</span>
                         </div>
-                        <h3 class="card-title"><a href="https://idc.com" target="_blank">2026年AI算力市场规模将突�?000亿美�?/a></h3>
-                        <p class="card-desc">全球AI基础设施投资同比增长67%，中国占比达28%�?/p>
+                        <h3 class="card-title"><a href="https://idc.com" target="_blank">2026年AI算力市场规模将突破5000亿美元</a></h3>
+                        <p class="card-desc">全球AI基础设施投资同比增长67%，中国占比达28%。</p>
                         <div class="card-meta">
                             <span>📍 IDC</span>
                         </div>
@@ -1046,8 +838,8 @@
                         <div class="card-header">
                             <span class="category-tag category-industry">行业观察</span>
                         </div>
-                        <h3 class="card-title"><a href="https://www.jiqizhixin.com" target="_blank">中国AI政策新动�?/a></h3>
-                        <p class="card-desc">国家出台AI发展专项规划，聚焦核心技术自主可控�?/p>
+                        <h3 class="card-title"><a href="https://www.jiqizhixin.com" target="_blank">中国AI政策新动向</a></h3>
+                        <p class="card-desc">国家出台AI发展专项规划，聚焦核心技术自主可控。</p>
                         <div class="card-meta">
                             <span>📍 机器之心</span>
                         </div>
@@ -1057,7 +849,7 @@
         </div>
 
         <footer>
-            <p>© 2026 AI每日日报 · 聚焦AI行业最新动�?/p>
+            <p>© 2026 AI每日日报 · 聚焦AI行业最新动态</p>
         </footer>
     </div>
 
@@ -1101,8 +893,3 @@
     </script>
 </body>
 </html>
-
-
-
-
-
