@@ -172,27 +172,7 @@
         }
 
         .timeline-dot {
-            position: absolute;
-            left: -53px;
-            top: 24px;
-            width: 6px;
-            height: 6px;
-            background: #C7D2FE;
-            border: 2px solid #fff;
-            border-radius: 50%;
-            z-index: 1;
-        }
-
-        .timeline-item:nth-child(even) .timeline-dot {
-            border-color: var(--secondary);
-        }
-
-        .timeline-item:nth-child(3n) .timeline-dot {
-            border-color: var(--success);
-        }
-
-        .timeline-item:nth-child(4n) .timeline-dot {
-            border-color: var(--accent);
+            display: none;
         }
 
         /* Card */
@@ -318,8 +298,7 @@
             }
 
             .timeline-dot {
-                left: -26px;
-                top: 0;
+                display: none;
             }
 
             .card {
