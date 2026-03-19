@@ -3,163 +3,937 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AI资讯</title>
+    <title>AI每日新闻</title>
     <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        
-        body { 
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; 
-            background: #ffffff; 
-            color: #1a1a1a; 
-            line-height: 1.6; 
-            padding: 48px 24px;
+        /* ===== CSS Variables ===== */
+        :root {
+            --primary: #165DFF;
+            --primary-light: #E8F3FF;
+            --primary-hover: #0D42CC;
+            --white: #FFFFFF;
+            --gray-100: #F2F3F5;
+            --gray-200: #E5E6EB;
+            --gray-300: #C9CDD4;
+            --gray-400: #4E5969;
+            --gray-500: #30363C;
+            --text-primary: #1D2129;
+            --text-secondary: #4E5969;
+            --shadow-sm: 0 2px 8px rgba(0,0,0,0.06);
+            --shadow-md: 0 4px 16px rgba(0,0,0,0.08);
+            --shadow-lg: 0 8px 32px rgba(0,0,0,0.12);
+            --radius-sm: 6px;
+            --radius-md: 10px;
+            --radius-lg: 16px;
+            --transition: all 0.2s ease;
         }
         
-        .container { max-width: 720px; margin: 0 auto; }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
         
-        h1 { 
-            font-size: 20px; 
-            font-weight: 600; 
-            margin-bottom: 40px; 
-            color: #000;
+        body {
+            font-family: 'SF Pro Display', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            background: var(--gray-100);
+            color: var(--text-primary);
+            line-height: 1.6;
+            min-height: 100vh;
+        }
+        
+        /* ===== Layout ===== */
+        .app-container {
+            display: flex;
+            min-height: 100vh;
+        }
+        
+        /* ===== Sidebar ===== */
+        .sidebar {
+            width: 260px;
+            background: var(--white);
+            border-right: 1px solid var(--gray-200);
+            display: flex;
+            flex-direction: column;
+            position: fixed;
+            top: 0;
+            left: 0;
+            height: 100vh;
+            z-index: 100;
+        }
+        
+        .sidebar-header {
+            padding: 24px 20px;
+            border-bottom: 1px solid var(--gray-200);
+        }
+        
+        .logo-text {
+            font-size: 18px;
+            font-weight: 700;
+            color: var(--text-primary);
             letter-spacing: -0.5px;
         }
         
-        .timeline { 
-            position: relative; 
-            border-left: 2px solid #e5e5e5;
-            margin-left: 8px;
-            padding-left: 28px;
+        .logo-text span {
+            color: var(--primary);
         }
         
-        .timeline-item { 
-            display: flex; 
-            align-items: flex-start; 
-            padding: 20px 0;
-            position: relative;
+        /* Category Nav */
+        .category-nav {
+            flex: 1;
+            padding: 16px 12px;
+            overflow-y: auto;
         }
         
-        .timeline-date { 
-            width: 52px; 
-            font-size: 13px; 
-            color: #8e8e93; 
-            flex-shrink: 0; 
-            font-weight: 500;
+        .nav-label {
+            font-size: 11px;
+            font-weight: 600;
+            color: var(--gray-400);
+            text-transform: uppercase;
             letter-spacing: 0.5px;
-        }
-        
-        .timeline-dot { 
-            width: 8px; 
-            height: 8px; 
-            background: #007aff; 
-            border-radius: 50%; 
-            margin: 8px 0 0 -33px;
-            flex-shrink: 0; 
-            position: relative;
-        }
-        
-        .timeline-content { flex: 1; }
-        
-        .timeline-title { 
-            font-size: 15px; 
-            font-weight: 500; 
-            color: #1a1a1a; 
+            padding: 8px 12px;
             margin-bottom: 4px;
-            cursor: pointer;
-            transition: color 0.15s;
         }
         
-        .timeline-title:hover { color: #007aff; }
-        
-        .timeline-desc { 
-            font-size: 13px; 
-            color: #6e6e73; 
-            line-height: 1.5;
-        }
-        
-        .timeline-tag { 
-            display: inline-block; 
-            font-size: 11px; 
-            color: #8e8e93; 
-            background: #f5f5f7; 
-            padding: 2px 6px; 
-            border-radius: 3px; 
-            margin-top: 8px;
+        .nav-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 12px 16px;
+            font-size: 14px;
             font-weight: 500;
+            color: var(--gray-400);
+            background: none;
+            border: none;
+            border-radius: var(--radius-md);
+            cursor: pointer;
+            width: 100%;
+            text-align: left;
+            transition: var(--transition);
         }
         
-        .timeline-source {
+        .nav-item:hover {
+            background: var(--gray-100);
+            color: var(--text-primary);
+        }
+        
+        .nav-item.active {
+            background: var(--primary-light);
+            color: var(--primary);
+        }
+        
+        .nav-item .icon {
+            font-size: 16px;
+            width: 20px;
+            text-align: center;
+        }
+        
+        .nav-item .count {
+            margin-left: auto;
+            font-size: 11px;
+            font-weight: 600;
+            background: var(--gray-200);
+            color: var(--gray-400);
+            padding: 2px 8px;
+            border-radius: 10px;
+        }
+        
+        .nav-item.active .count {
+            background: var(--primary);
+            color: var(--white);
+        }
+        
+        /* Filters in Sidebar */
+        .sidebar-filters {
+            padding: 16px 20px;
+            border-top: 1px solid var(--gray-200);
+            background: var(--gray-100);
+        }
+        
+        .filter-group {
+            margin-bottom: 12px;
+        }
+        
+        .filter-group:last-child {
+            margin-bottom: 0;
+        }
+        
+        .filter-label {
             font-size: 12px;
-            color: #8e8e93;
-            margin-top: 6px;
+            font-weight: 600;
+            color: var(--gray-400);
+            margin-bottom: 6px;
+            display: block;
+        }
+        
+        .filter-select {
+            width: 100%;
+            padding: 10px 12px;
+            font-size: 13px;
+            border: 1px solid var(--gray-200);
+            border-radius: var(--radius-sm);
+            background: var(--white);
+            color: var(--text-primary);
+            cursor: pointer;
+            transition: var(--transition);
+        }
+        
+        .filter-select:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(22, 93, 255, 0.1);
+        }
+        
+        /* ===== Main Content ===== */
+        .main-content {
+            flex: 1;
+            margin-left: 260px;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        /* ===== Top Banner ===== */
+        .top-banner {
+            height: 180px;
+            background: linear-gradient(135deg, #0D42CC 0%, #165DFF 50%, #4080FF 100%);
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 48px;
+        }
+        
+        .banner-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: 
+                radial-gradient(circle at 20% 80%, rgba(255,255,255,0.1) 0%, transparent 50%),
+                radial-gradient(circle at 80% 20%, rgba(255,255,255,0.08) 0%, transparent 40%);
+        }
+        
+        .banner-pattern {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-image: 
+                linear-gradient(rgba(255,255,255,0.03) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255,255,255,0.03) 1px, transparent 1px);
+            background-size: 40px 40px;
+        }
+        
+        .banner-title {
+            position: relative;
+            z-index: 1;
+        }
+        
+        .banner-title h1 {
+            font-size: 48px;
+            font-weight: 800;
+            color: var(--white);
+            letter-spacing: -2px;
+            text-shadow: 0 4px 20px rgba(0,0,0,0.2);
+        }
+        
+        .banner-title p {
+            font-size: 16px;
+            color: rgba(255,255,255,0.8);
+            margin-top: 8px;
+        }
+        
+        .banner-search {
+            position: relative;
+            z-index: 1;
+            width: 320px;
+        }
+        
+        .banner-search input {
+            width: 100%;
+            padding: 14px 20px 14px 46px;
+            font-size: 14px;
+            border: none;
+            border-radius: 12px;
+            background: rgba(255,255,255,0.95);
+            box-shadow: var(--shadow-lg);
+            transition: var(--transition);
+        }
+        
+        .banner-search input:focus {
+            outline: none;
+            transform: scale(1.02);
+            box-shadow: var(--shadow-lg), 0 0 0 3px rgba(255,255,255,0.3);
+        }
+        
+        .banner-search::before {
+            content: '🔍';
+            position: absolute;
+            left: 18px;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 16px;
+            z-index: 1;
+        }
+        
+        /* ===== News Content ===== */
+        .content-area {
+            flex: 1;
+            padding: 32px 48px;
+            background: var(--gray-100);
+        }
+        
+        .content-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 24px;
+        }
+        
+        .content-title {
+            font-size: 20px;
+            font-weight: 700;
+            color: var(--text-primary);
+        }
+        
+        .refresh-info {
+            font-size: 12px;
+            color: var(--gray-400);
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+        
+        .refresh-dot {
+            width: 6px;
+            height: 6px;
+            background: #34C759;
+            border-radius: 50%;
+            animation: pulse 2s infinite;
+        }
+        
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+        
+        /* ===== News Grid ===== */
+        .news-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+        }
+        
+        .news-card {
+            background: var(--white);
+            border-radius: var(--radius-lg);
+            padding: 24px;
+            box-shadow: var(--shadow-sm);
+            transition: var(--transition);
+            cursor: pointer;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .news-card:hover {
+            transform: translateY(-4px);
+            box-shadow: var(--shadow-md);
+        }
+        
+        .news-card-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 16px;
+        }
+        
+        .news-source {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .source-icon {
+            width: 28px;
+            height: 28px;
+            background: var(--primary-light);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+            font-weight: 700;
+            color: var(--primary);
+        }
+        
+        .source-name {
+            font-size: 13px;
+            font-weight: 600;
+            color: var(--primary);
+        }
+        
+        .news-collect {
+            width: 36px;
+            height: 36px;
+            background: var(--gray-100);
+            border: none;
+            border-radius: 10px;
+            font-size: 18px;
+            color: var(--gray-400);
+            cursor: pointer;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .news-collect:hover {
+            background: var(--primary-light);
+            color: var(--primary);
+        }
+        
+        .news-collect.collected {
+            background: #FFF3E0;
+            color: #F5A623;
+        }
+        
+        .news-title {
+            font-size: 16px;
+            font-weight: 600;
+            color: var(--text-primary);
+            line-height: 1.5;
+            margin-bottom: 12px;
+            flex: 1;
+        }
+        
+        .news-title:hover {
+            color: var(--primary);
+        }
+        
+        .news-meta {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-top: auto;
+            padding-top: 16px;
+            border-top: 1px solid var(--gray-100);
+        }
+        
+        .news-time {
+            font-size: 12px;
+            color: var(--gray-400);
+        }
+        
+        .news-link {
+            font-size: 13px;
+            font-weight: 600;
+            color: var(--primary);
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            transition: var(--transition);
+        }
+        
+        .news-link:hover {
+            color: var(--primary-hover);
+            gap: 8px;
+        }
+        
+        /* ===== Empty State ===== */
+        .empty-state {
+            grid-column: 1 / -1;
+            text-align: center;
+            padding: 80px 40px;
+            background: var(--white);
+            border-radius: var(--radius-lg);
+        }
+        
+        .empty-icon {
+            font-size: 56px;
+            margin-bottom: 16px;
+        }
+        
+        .empty-text {
+            font-size: 16px;
+            color: var(--gray-400);
+        }
+        
+        /* ===== Footer ===== */
+        .main-footer {
+            padding: 24px 48px;
+            background: var(--white);
+            border-top: 1px solid var(--gray-200);
+            text-align: center;
+        }
+        
+        .footer-text {
+            font-size: 13px;
+            color: var(--gray-400);
+        }
+        
+        /* ===== Responsive ===== */
+        @media (max-width: 1200px) {
+            .news-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+        
+        @media (max-width: 900px) {
+            .sidebar {
+                transform: translateX(-100%);
+                transition: transform 0.3s ease;
+            }
+            
+            .sidebar.open {
+                transform: translateX(0);
+            }
+            
+            .main-content {
+                margin-left: 0;
+            }
+            
+            .top-banner {
+                height: 140px;
+                padding: 0 24px;
+            }
+            
+            .banner-title h1 {
+                font-size: 32px;
+            }
+            
+            .banner-search {
+                width: 200px;
+            }
+            
+            .content-area {
+                padding: 24px;
+            }
+        }
+        
+        @media (max-width: 640px) {
+            .banner-search {
+                display: none;
+            }
+            
+            .content-area {
+                padding: 16px;
+            }
+            
+            .news-card {
+                padding: 16px;
+            }
+            
+            .main-footer {
+                padding: 16px;
+            }
         }
     </style>
 </head>
 <body>
-    <div class="container">
-        <h1>AI 资讯</h1>
+    <div class="app-container">
+        <!-- Sidebar -->
+        <aside class="sidebar" id="sidebar">
+            <div class="sidebar-header">
+                <div class="logo-text">AI<span>每日新闻</span></div>
+            </div>
+            
+            <nav class="category-nav">
+                <div class="nav-label">分类</div>
+                <button class="nav-item active" data-category="all">
+                    <span class="icon">📰</span>
+                    <span>总览</span>
+                    <span class="count">8</span>
+                </button>
+                <button class="nav-item" data-category="model">
+                    <span class="icon">🧠</span>
+                    <span>大模型动态</span>
+                    <span class="count">3</span>
+                </button>
+                <button class="nav-item" data-category="tech">
+                    <span class="icon">⚡</span>
+                    <span>技术进展</span>
+                    <span class="count">1</span>
+                </button>
+                <button class="nav-item" data-category="company">
+                    <span class="icon">🏢</span>
+                    <span>公司动向</span>
+                    <span class="count">1</span>
+                </button>
+                <button class="nav-item" data-category="application">
+                    <span class="icon">🎯</span>
+                    <span>应用落地</span>
+                    <span class="count">1</span>
+                </button>
+                <button class="nav-item" data-category="agent">
+                    <span class="icon">🤖</span>
+                    <span>智能体</span>
+                    <span class="count">1</span>
+                </button>
+                <button class="nav-item" data-category="industry">
+                    <span class="icon">📊</span>
+                    <span>行业观察</span>
+                    <span class="count">1</span>
+                </button>
+            </nav>
+            
+            <div class="sidebar-filters">
+                <div class="filter-group">
+                    <label class="filter-label">来源</label>
+                    <select class="filter-select" id="sourceFilter">
+                        <option value="">全部来源</option>
+                        <option value="量子位">量子位</option>
+                        <option value="机器之心">机器之心</option>
+                        <option value="36氪">36氪</option>
+                        <option value="阿里云">阿里云</option>
+                    </select>
+                </div>
+                <div class="filter-group">
+                    <label class="filter-label">日期</label>
+                    <select class="filter-select" id="dateFilter">
+                        <option value="">全部时间</option>
+                        <option value="today">今天</option>
+                        <option value="week">本周</option>
+                        <option value="month">本月</option>
+                    </select>
+                </div>
+            </div>
+        </aside>
         
-        <div class="timeline">
-            <div class="timeline-item">
-                <div class="timeline-date">03-19</div>
-                <div class="timeline-dot"></div>
-                <div class="timeline-content">
-                    <div class="timeline-title">Nvidia发布Vera Rubin平台</div>
-                    <div class="timeline-desc">7芯片设计，推理吞吐量提升10倍</div>
-                    <div class="timeline-source">VentureBeat</div>
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Top Banner -->
+            <div class="top-banner">
+                <div class="banner-bg"></div>
+                <div class="banner-pattern"></div>
+                <div class="banner-title">
+                    <h1>AI每日新闻</h1>
+                    <p>聚焦AI行业动态 · 每3小时自动更新</p>
+                </div>
+                <div class="banner-search">
+                    <input type="text" id="searchInput" placeholder="搜索新闻...">
                 </div>
             </div>
             
-            <div class="timeline-item">
-                <div class="timeline-date">03-19</div>
-                <div class="timeline-dot"></div>
-                <div class="timeline-content">
-                    <div class="timeline-title">Nvidia DGX Station桌面超算</div>
-                    <div class="timeline-desc">可在单工程师桌面上运行万亿参数AI模型</div>
-                    <div class="timeline-source">VentureBeat</div>
+            <!-- Content Area -->
+            <div class="content-area">
+                <div class="content-header">
+                    <h2 class="content-title" id="categoryTitle">总览</h2>
+                    <div class="refresh-info">
+                        <span class="refresh-dot"></span>
+                        <span id="refreshTime">刚刚更新</span>
+                    </div>
+                </div>
+                
+                <div class="news-grid" id="newsGrid">
+                    <!-- News cards will be rendered here -->
                 </div>
             </div>
             
-            <div class="timeline-item">
-                <div class="timeline-date">03-19</div>
-                <div class="timeline-dot"></div>
-                <div class="timeline-content">
-                    <div class="timeline-title">Nvidia企业AI Agent平台</div>
-                    <div class="timeline-desc">17家企业首批采用</div>
-                    <div class="timeline-source">VentureBeat</div>
-                </div>
-            </div>
-            
-            <div class="timeline-item">
-                <div class="timeline-date">03-19</div>
-                <div class="timeline-dot"></div>
-                <div class="timeline-content">
-                    <div class="timeline-title">OpenAI精简业务</div>
-                    <div class="timeline-desc">优先编程和企业用户</div>
-                    <div class="timeline-source">The Verge</div>
-                </div>
-            </div>
-            
-            <div class="timeline-item">
-                <div class="timeline-date">03-19</div>
-                <div class="timeline-dot"></div>
-                <div class="timeline-content">
-                    <div class="timeline-title">Nvidia NemoClaw安全平台</div>
-                    <div class="timeline-desc">隔离沙箱提供数据隐私保障</div>
-                    <div class="timeline-source">The Verge</div>
-                </div>
-            </div>
-            
-            <div class="timeline-item">
-                <div class="timeline-date">03-19</div>
-                <div class="timeline-dot"></div>
-                <div class="timeline-content">
-                    <div class="timeline-title">Amazon Alexa"Sassy"性格</div>
-                    <div class="timeline-desc">犀利俏皮风格</div>
-                    <div class="timeline-source">The Verge</div>
-                </div>
-            </div>
-        </div>
+            <!-- Footer -->
+            <footer class="main-footer">
+                <p class="footer-text">© 2026 AI每日新闻 · 自动刷新间隔 3 小时</p>
+            </footer>
+        </main>
     </div>
+
+    <script>
+        // ===== Sample Data =====
+        const newsData = [
+            {
+                id: '1',
+                title: 'DeepSeek发布最新多模态模型DeepSeek-VL2',
+                summary: '该模型支持图像、文本、音频多模态理解，在多项基准测试中超越同级别模型表现',
+                source: '量子位',
+                source_url: '#',
+                publish_time: '2026-03-19 10:00:00',
+                category: 'model'
+            },
+            {
+                id: '2',
+                title: 'OpenAI GPT-5进入最终测试阶段',
+                summary: 'OpenAI官方确认GPT-5已完成内部测试，预计下月正式发布',
+                source: '36氪',
+                source_url: '#',
+                publish_time: '2026-03-19 09:30:00',
+                category: 'model'
+            },
+            {
+                id: '3',
+                title: 'MIT发布新型注意力机制，推理速度提升10倍',
+                summary: 'MIT研究团队提出Flash Linear Attention新型注意力机制',
+                source: '机器之心',
+                source_url: '#',
+                publish_time: '2026-03-19 08:00:00',
+                category: 'tech'
+            },
+            {
+                id: '4',
+                title: '英伟达发布新一代AI芯片Blackwell Ultra',
+                summary: '英伟达推出Blackwell Ultra AI芯片，采用新一代制程工艺',
+                source: '量子位',
+                source_url: '#',
+                publish_time: '2026-03-18 15:00:00',
+                category: 'company'
+            },
+            {
+                id: '5',
+                title: '阿里云推出企业级AI Agent开发平台',
+                summary: '阿里云发布百炼平台企业版，提供一站式AI Agent开发工具',
+                source: '阿里云',
+                source_url: '#',
+                publish_time: '2026-03-18 14:00:00',
+                category: 'application'
+            },
+            {
+                id: '6',
+                title: 'Anthropic发布Claude Enterprise企业版',
+                summary: 'Claude Enterprise支持大规模部署，提供企业级安全管控',
+                source: '36氪',
+                source_url: '#',
+                publish_time: '2026-03-18 11:00:00',
+                category: 'agent'
+            },
+            {
+                id: '7',
+                title: '2026年AI行业趋势报告：十大预测',
+                summary: '预测AI Agent市场规模将突破千亿美元',
+                source: '机器之心',
+                source_url: '#',
+                publish_time: '2026-03-17 10:00:00',
+                category: 'industry'
+            },
+            {
+                id: '8',
+                title: 'Google DeepMind发布Gemini 2.5 Pro',
+                summary: 'Gemini 2.5 Pro在多项基准测试中创下新纪录',
+                source: '量子位',
+                source_url: '#',
+                publish_time: '2026-03-17 09:00:00',
+                category: 'model'
+            }
+        ];
+        
+        // Category name mapping
+        const categoryNames = {
+            all: '总览',
+            model: '大模型动态',
+            tech: '技术进展',
+            company: '公司动向',
+            application: '应用落地',
+            agent: '智能体',
+            industry: '行业观察'
+        };
+        
+        const categoryIcons = {
+            all: '📰',
+            model: '🧠',
+            tech: '⚡',
+            company: '🏢',
+            application: '🎯',
+            agent: '🤖',
+            industry: '📊'
+        };
+        
+        // ===== State =====
+        let currentCategory = 'all';
+        let currentSource = '';
+        let currentDate = '';
+        let searchKeyword = '';
+        let collected = JSON.parse(localStorage.getItem('collected') || '[]');
+        let lastRefresh = new Date();
+        
+        // ===== Auto-refresh every 3 hours =====
+        const REFRESH_INTERVAL = 3 * 60 * 60 * 1000; // 3 hours
+        
+        function refreshNews() {
+            lastRefresh = new Date();
+            updateRefreshTime();
+            renderNews();
+            console.log('📰 新闻已刷新');
+        }
+        
+        function updateRefreshTime() {
+            const now = new Date();
+            const diff = now - lastRefresh;
+            const minutes = Math.floor(diff / 60000);
+            
+            let timeText;
+            if (minutes < 1) timeText = '刚刚更新';
+            else if (minutes < 60) timeText = `${minutes}分钟前`;
+            else timeText = `${Math.floor(minutes / 60)}小时前`;
+            
+            document.getElementById('refreshTime').textContent = timeText;
+        }
+        
+        // Set auto-refresh
+        setInterval(refreshNews, REFRESH_INTERVAL);
+        setInterval(updateRefreshTime, 60000); // Update time display every minute
+        
+        // ===== Format Time =====
+        function formatTime(dateStr) {
+            const date = new Date(dateStr);
+            const now = new Date();
+            const diff = now - date;
+            const hours = Math.floor(diff / 3600000);
+            const days = Math.floor(diff / 86400000);
+            
+            if (hours < 1) return '刚刚';
+            if (hours < 24) return `${hours}小时前`;
+            if (days < 7) return `${days}天前`;
+            
+            return `${date.getMonth() + 1}-${date.getDate()}`;
+        }
+        
+        // ===== Get Source Icon =====
+        function getSourceIcon(source) {
+            return source.charAt(0);
+        }
+        
+        // ===== Render News =====
+        function renderNews() {
+            let filtered = [...newsData];
+            
+            // Category filter
+            if (currentCategory !== 'all') {
+                filtered = filtered.filter(n => n.category === currentCategory);
+            }
+            
+            // Source filter
+            if (currentSource) {
+                filtered = filtered.filter(n => n.source === currentSource);
+            }
+            
+            // Date filter
+            if (currentDate === 'today') {
+                const today = new Date().toISOString().slice(0, 10);
+                filtered = filtered.filter(n => n.publish_time.slice(0, 10) === today);
+            } else if (currentDate === 'week') {
+                const weekAgo = new Date(Date.now() - 7 * 24 * 60 * 60 * 1000).toISOString().slice(0, 10);
+                filtered = filtered.filter(n => n.publish_time.slice(0, 10) >= weekAgo);
+            } else if (currentDate === 'month') {
+                const monthAgo = new Date(Date.now() - 30 * 24 * 60 * 60 * 1000).toISOString().slice(0, 10);
+                filtered = filtered.filter(n => n.publish_time.slice(0, 10) >= monthAgo);
+            }
+            
+            // Search filter
+            if (searchKeyword) {
+                const kw = searchKeyword.toLowerCase();
+                filtered = filtered.filter(n => 
+                    n.title.toLowerCase().includes(kw) || 
+                    n.summary.toLowerCase().includes(kw)
+                );
+            }
+            
+            const grid = document.getElementById('newsGrid');
+            
+            if (filtered.length === 0) {
+                grid.innerHTML = `
+                    <div class="empty-state">
+                        <div class="empty-icon">📭</div>
+                        <div class="empty-text">暂无相关新闻</div>
+                    </div>
+                `;
+                return;
+            }
+            
+            grid.innerHTML = filtered.map(news => `
+                <article class="news-card" onclick="window.open('${news.source_url}', '_blank')">
+                    <div class="news-card-header">
+                        <div class="news-source">
+                            <div class="source-icon">${getSourceIcon(news.source)}</div>
+                            <span class="source-name">${news.source}</span>
+                        </div>
+                        <button class="news-collect ${collected.includes(news.id) ? 'collected' : ''}" 
+                                onclick="event.stopPropagation(); toggleCollect('${news.id}')">
+                            ${collected.includes(news.id) ? '★' : '☆'}
+                        </button>
+                    </div>
+                    <h3 class="news-title">${news.title}</h3>
+                    <div class="news-meta">
+                        <span class="news-time">${formatTime(news.publish_time)}</span>
+                        <a href="${news.source_url}" class="news-link" onclick="event.stopPropagation();">
+                            阅读原文 <span>→</span>
+                        </a>
+                    </div>
+                </article>
+            `).join('');
+            
+            // Update count
+            updateCategoryCount();
+        }
+        
+        // ===== Update Category Count =====
+        function updateCategoryCount() {
+            const counts = { all: newsData.length };
+            newsData.forEach(news => {
+                counts[news.category] = (counts[news.category] || 0) + 1;
+            });
+            
+            document.querySelectorAll('.nav-item').forEach(item => {
+                const category = item.dataset.category;
+                const countEl = item.querySelector('.count');
+                if (countEl && counts[category] !== undefined) {
+                    countEl.textContent = counts[category];
+                }
+            });
+        }
+        
+        // ===== Toggle Collect =====
+        function toggleCollect(id) {
+            if (collected.includes(id)) {
+                collected = collected.filter(c => c !== id);
+            } else {
+                collected.push(id);
+            }
+            localStorage.setItem('collected', JSON.stringify(collected));
+            renderNews();
+        }
+        
+        // ===== Event Listeners =====
+        
+        // Category navigation
+        document.querySelectorAll('.nav-item').forEach(item => {
+            item.addEventListener('click', () => {
+                document.querySelector('.nav-item.active').classList.remove('active');
+                item.classList.add('active');
+                currentCategory = item.dataset.category;
+                document.getElementById('categoryTitle').textContent = categoryNames[currentCategory];
+                renderNews();
+            });
+        });
+        
+        // Filters
+        document.getElementById('sourceFilter').addEventListener('change', (e) => {
+            currentSource = e.target.value;
+            renderNews();
+        });
+        
+        document.getElementById('dateFilter').addEventListener('change', (e) => {
+            currentDate = e.target.value;
+            renderNews();
+        });
+        
+        // Search
+        document.getElementById('searchInput').addEventListener('input', (e) => {
+            searchKeyword = e.target.value;
+            renderNews();
+        });
+        
+        // ===== Initial Render =====
+        renderNews();
+        
+        /* 
+         * ===== 自动刷新机制说明 =====
+         * 1. 每 3 小时自动刷新一次新闻数据
+         * 2. 使用 setInterval 实现定时刷新
+         * 3. 刷新时更新 "最近更新时间" 显示
+         * 4. 数据存储在 newsData 数组中（实际项目中应从API获取）
+         * 
+         * ===== 无摘要新闻处理规则 =====
+         * 1. 优先显示原文摘要 (summary 字段)
+         * 2. 如无摘要：尝试提取文章相关配图描述
+         * 3. 如无配图：生成一句话简洁摘要（基于标题）
+         * 4. 当前实现使用 summary 字段作为主旨摘要
+         */
+    </script>
 </body>
 </html>
