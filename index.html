@@ -3,115 +3,65 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AI每日资讯</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;600&display=swap" rel="stylesheet">
+    <title>AI资讯</title>
     <style>
-        :root {
-            --primary: #007AFF;
-            --text: #1C1C1E;
-            --text-secondary: #8E8E93;
-            --bg: #F2F2F7;
-            --card-bg: #FFFFFF;
-        }
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        body { font-family: 'Noto Sans SC', sans-serif; background: var(--bg); color: var(--text); padding: 24px; line-height: 1.5; }
-        .container { max-width: 600px; margin: 0 auto; }
-        
-        h1 { font-size: 24px; font-weight: 600; margin-bottom: 24px; }
-        
-        .timeline { position: relative; padding-left: 60px; }
-        .timeline::before { content: ''; position: absolute; left: 20px; top: 0; bottom: 0; width: 2px; background: #E5E5EA; }
-        
-        .item { position: relative; margin-bottom: 20px; }
-        .item-date { position: absolute; left: -60px; top: 4px; width: 40px; font-size: 12px; color: var(--text-secondary); text-align: right; }
-        .item-dot { position: absolute; left: 14px; top: 8px; width: 14px; height: 14px; background: var(--card-bg); border: 3px solid var(--primary); border-radius: 50%; }
-        
-        .item-card { background: var(--card-bg); border-radius: 12px; padding: 16px; box-shadow: 0 1px 3px rgba(0,0,0,0.1); }
-        .item-title { font-size: 15px; font-weight: 500; margin-bottom: 4px; }
-        .item-title a { color: var(--text); text-decoration: none; }
-        .item-title a:hover { color: var(--primary); }
-        .item-desc { font-size: 13px; color: var(--text-secondary); }
-        .item-source { font-size: 12px; color: var(--text-secondary); margin-top: 8px; }
-        
-        .footer { text-align: center; margin-top: 32px; color: var(--text-secondary); font-size: 12px; }
-        
-        @media (max-width: 480px) {
-            .timeline { padding-left: 40px; }
-            .timeline::before { left: 12px; }
-            .item-date { left: -40px; width: 30px; font-size: 11px; }
-            .item-dot { left: 6px; width: 12px; height: 12px; }
-        }
+        * { margin: 0; padding: 0; }
+        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: #fff; padding: 20px; }
+        .item { display: flex; align-items: flex-start; margin-bottom: 16px; padding-bottom: 16px; border-bottom: 1px solid #f0f0f0; }
+        .date { width: 40px; font-size: 12px; color: #8e8e93; text-align: center; flex-shrink: 0; }
+        .dot { width: 8px; height: 8px; background: #007AFF; border-radius: 50%; margin: 4px 12px 0 8px; flex-shrink: 0; }
+        .content { flex: 1; }
+        .title { font-size: 14px; font-weight: 500; color: #000; margin-bottom: 4px; }
+        .desc { font-size: 12px; color: #8e8e93; }
     </style>
 </head>
 <body>
-    <div class="container">
-        <h1>🤖 AI每日资讯</h1>
-        
-        <div class="timeline">
-            <div class="item">
-                <div class="item-date">03-19</div>
-                <div class="item-dot"></div>
-                <div class="item-card">
-                    <div class="item-title"><a href="https://venturebeat.com/infrastructure/nvidia-introduces-vera-rubin-a-seven-chip-ai-platform-with-openai-anthropic" target="_blank">Nvidia发布Vera Rubin平台：史上最强AI芯片</a></div>
-                    <div class="item-desc">采用7芯片设计，推理吞吐量较Blackwell提升10倍。</div>
-                    <div class="item-source">📍 VentureBeat</div>
-                </div>
-            </div>
-            
-            <div class="item">
-                <div class="item-date">03-19</div>
-                <div class="item-dot"></div>
-                <div class="item-card">
-                    <div class="item-title"><a href="https://venturebeat.com/infrastructure/nvidias-dgx-station-is-a-desktop-supercomputer-that-runs-trillion-parameter" target="_blank">Nvidia推出DGX Station桌面超级计算机</a></div>
-                    <div class="item-desc">可在单个工程师桌面上运行万亿参数AI模型。</div>
-                    <div class="item-source">📍 VentureBeat</div>
-                </div>
-            </div>
-            
-            <div class="item">
-                <div class="item-date">03-19</div>
-                <div class="item-dot"></div>
-                <div class="item-card">
-                    <div class="item-title"><a href="https://venturebeat.com/technology/nvidia-launches-enterprise-ai-agent-platform-with-adobe-salesforce-sap-among" target="_blank">Nvidia发布企业AI Agent平台，17家企业首批采用</a></div>
-                    <div class="item-desc">首批合作客户包括Adobe、Salesforce、SAP等。</div>
-                    <div class="item-source">📍 VentureBeat</div>
-                </div>
-            </div>
-            
-            <div class="item">
-                <div class="item-date">03-19</div>
-                <div class="item-dot"></div>
-                <div class="item-card">
-                    <div class="item-title"><a href="https://www.theverge.com/ai-artificial-intelligence/893189/openai-chatgpt-sora-integration" target="_blank">OpenAI精简业务：优先编程和企业用户</a></div>
-                    <div class="item-desc">CEO宣布战略调整，削减Sora AI视频等非核心项目。</div>
-                    <div class="item-source">📍 The Verge</div>
-                </div>
-            </div>
-            
-            <div class="item">
-                <div class="item-date">03-19</div>
-                <div class="item-dot"></div>
-                <div class="item-card">
-                    <div class="item-title"><a href="https://www.theverge.com/ai-artificial-intelligence/895363/nvidia-nemoclaw-privacy-security-autonomous-agents" target="_blank">Nvidia推出NemoClaw：更安全的自主AI平台</a></div>
-                    <div class="item-desc">通过隔离沙箱环境提供数据隐私和安全保障。</div>
-                    <div class="item-source">📍 The Verge</div>
-                </div>
-            </div>
-            
-            <div class="item">
-                <div class="item-date">03-19</div>
-                <div class="item-dot"></div>
-                <div class="item-card">
-                    <div class="item-title"><a href="https://www.theverge.com/tech/894135/amazons-sassy-personality-style-for-alexa-plus-has-a-lot-of-warning-labels" target="_blank">Amazon Alexa推出"Sassy"性格</a></div>
-                    <div class="item-desc">新增"犀利俏皮的讽刺风格"性格选项。</div>
-                    <div class="item-source">📍 The Verge</div>
-                </div>
-            </div>
+    <div class="item">
+        <div class="date">03-19</div>
+        <div class="dot"></div>
+        <div class="content">
+            <div class="title">Nvidia发布Vera Rubin平台：史上最强AI芯片</div>
+            <div class="desc">VentureBeat</div>
         </div>
-        
-        <div class="footer">
-            📅 2026-03-19
+    </div>
+    <div class="item">
+        <div class="date">03-19</div>
+        <div class="dot"></div>
+        <div class="content">
+            <div class="title">Nvidia推出DGX Station桌面超级计算机</div>
+            <div class="desc">VentureBeat</div>
+        </div>
+    </div>
+    <div class="item">
+        <div class="date">03-19</div>
+        <div class="dot"></div>
+        <div class="content">
+            <div class="title">Nvidia发布企业AI Agent平台</div>
+            <div class="desc">VentureBeat</div>
+        </div>
+    </div>
+    <div class="item">
+        <div class="date">03-19</div>
+        <div class="dot"></div>
+        <div class="content">
+            <div class="title">OpenAI精简业务：优先编程和企业用户</div>
+            <div class="desc">The Verge</div>
+        </div>
+    </div>
+    <div class="item">
+        <div class="date">03-19</div>
+        <div class="dot"></div>
+        <div class="content">
+            <div class="title">Nvidia NemoClaw：更安全的自主AI平台</div>
+            <div class="desc">The Verge</div>
+        </div>
+    </div>
+    <div class="item">
+        <div class="date">03-19</div>
+        <div class="dot"></div>
+        <div class="content">
+            <div class="title">Amazon Alexa推出"Sassy"性格</div>
+            <div class="desc">The Verge</div>
         </div>
     </div>
 </body>
