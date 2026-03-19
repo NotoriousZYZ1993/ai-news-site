@@ -10,6 +10,7 @@ const path = require('path');
 
 // 新闻来源配置
 const SOURCES = [
+    // 国内科技媒体
     {
         name: '量子位',
         shortName: '量子位',
@@ -22,20 +23,6 @@ const SOURCES = [
             '产品': 'application', '应用': 'application',
             'Agent': 'agent', '智能体': 'agent',
             '行业': 'industry', '趋势': 'industry', '报告': 'industry'
-        }
-    },
-    {
-        name: '机器之心',
-        shortName: '机器之心',
-        url: 'https://www.jiqizhixin.com/',
-        rss: 'https://www.jiqizhixin.com/feed',
-        categoryMapping: {
-            '大模型': 'model', 'GPT': 'model', '模型': 'model',
-            '技术': 'tech', '论文': 'tech', '研究': 'tech',
-            '融资': 'company', '发布': 'company', '合作': 'company',
-            '应用': 'application', '产品': 'application',
-            'Agent': 'agent', '智能体': 'agent',
-            '行业': 'industry', '趋势': 'industry'
         }
     },
     {
@@ -52,59 +39,135 @@ const SOURCES = [
         }
     },
     {
-        name: '新智元',
-        shortName: '新智元',
-        url: 'https://aiera.com.cn/',
-        rss: 'https://aiera.com.cn/feed',
+        name: '机器之心',
+        shortName: '机器之心',
+        url: 'https://www.jiqizhixin.com/',
+        rss: 'https://www.jiqizhixin.com/feed',
         categoryMapping: {
-            '大模型': 'model', 'GPT': 'model', 'Claude': 'model', 'DeepSeek': 'model', 'Gemini': 'model',
-            '技术': 'tech', '论文': 'tech', '算法': 'tech',
-            '融资': 'company', '发布': 'company',
-            '产品': 'application', '应用': 'application',
-            'Agent': 'agent', '智能体': 'agent',
-            '行业': 'industry', '趋势': 'industry'
-        }
-    },
-    {
-        name: 'AI科技评论',
-        shortName: 'AI科技评论',
-        url: 'https://sp.atyun.com/c/news',
-        rss: 'https://sp.atyun.com/feed',
-        categoryMapping: {
-            '大模型': 'model', 'GPT': 'model', 'Claude': 'model', 'DeepSeek': 'model',
+            '大模型': 'model', 'GPT': 'model', '模型': 'model',
             '技术': 'tech', '论文': 'tech', '研究': 'tech',
-            '融资': 'company', '发布': 'company',
-            '产品': 'application', '应用': 'application',
+            '融资': 'company', '发布': 'company', '合作': 'company',
+            '应用': 'application', '产品': 'application',
             'Agent': 'agent', '智能体': 'agent',
             '行业': 'industry', '趋势': 'industry'
         }
     },
+    // 大模型厂商官方博客
     {
-        name: 'Founder Park',
-        shortName: 'Founder Park',
-        url: 'https://founderpark.net/',
-        rss: 'https://founderpark.net/feed',
+        name: 'OpenAI',
+        shortName: 'OpenAI',
+        url: 'https://openai.com/blog',
+        rss: 'https://openai.com/blog/rss.xml',
         categoryMapping: {
-            '大模型': 'model', 'GPT': 'model', 'AI': 'model',
-            '技术': 'tech',
-            '融资': 'company', '发布': 'company', '创业': 'company', '投资': 'company',
+            'GPT': 'model', 'GPT-4': 'model', 'GPT-5': 'model', 'O1': 'model', 'Sora': 'model',
+            'API': 'model', '模型': 'model',
+            '技术': 'tech', '研究': 'tech',
+            '产品': 'application', '应用': 'application',
+            'Agent': 'agent',
+            '行业': 'industry'
+        }
+    },
+    {
+        name: 'Anthropic',
+        shortName: 'Anthropic',
+        url: 'https://www.anthropic.com/blog',
+        rss: 'https://www.anthropic.com/blog/rss.xml',
+        categoryMapping: {
+            'Claude': 'model', '模型': 'model',
+            '技术': 'tech', '研究': 'tech',
             '产品': 'application', '应用': 'application',
             'Agent': 'agent', '智能体': 'agent',
-            '行业': 'industry', '趋势': 'industry'
+            '行业': 'industry'
+        }
+    },
+    {
+        name: 'DeepSeek',
+        shortName: 'DeepSeek',
+        url: 'https://www.deepseek.com/blog',
+        rss: 'https://www.deepseek.com/blog/rss.xml',
+        categoryMapping: {
+            'DeepSeek': 'model', '模型': 'model', '开源': 'model',
+            '技术': 'tech', '论文': 'tech', '研究': 'tech',
+            '产品': 'application', '应用': 'application',
+            '行业': 'industry'
+        }
+    },
+    {
+        name: 'Google AI',
+        shortName: 'Google AI',
+        url: 'https://blog.google/technology/ai/',
+        rss: 'https://blog.google/technology/ai/rss',
+        categoryMapping: {
+            'Gemini': 'model', 'PaLM': 'model', 'Google': 'model', '模型': 'model',
+            '技术': 'tech', '研究': 'tech', '论文': 'tech',
+            '产品': 'application', '应用': 'application',
+            'Agent': 'agent', '智能体': 'agent',
+            '行业': 'industry'
+        }
+    },
+    {
+        name: 'Meta AI',
+        shortName: 'Meta AI',
+        url: 'https://ai.facebook.com/blog',
+        rss: 'https://ai.facebook.com/blog/rss.xml',
+        categoryMapping: {
+            'Llama': 'model', 'Meta': 'model', '模型': 'model', '开源': 'model',
+            '技术': 'tech', '研究': 'tech', '论文': 'tech',
+            '产品': 'application', '应用': 'application',
+            '行业': 'industry'
+        }
+    },
+    {
+        name: 'Mistral AI',
+        shortName: 'Mistral AI',
+        url: 'https://mistral.ai/news/',
+        rss: 'https://mistral.ai/news/rss.xml',
+        categoryMapping: {
+            'Mistral': 'model', '模型': 'model', '开源': 'model',
+            '技术': 'tech', '研究': 'tech',
+            '产品': 'application', '应用': 'application',
+            '行业': 'industry'
+        }
+    },
+    {
+        name: '百度AI',
+        shortName: '百度AI',
+        url: 'https://ai.baidu.com/tech',
+        rss: 'https://ai.baidu.com/feed/rss',
+        categoryMapping: {
+            '文心': 'model', 'ERNIE': 'model', '模型': 'model',
+            '技术': 'tech', '研究': 'tech',
+            '产品': 'application', '应用': 'application',
+            '行业': 'industry'
+        }
+    },
+    {
+        name: '阿里云',
+        shortName: '阿里云',
+        url: 'https://developer.aliyun.com/ai',
+        rss: 'https://developer.aliyun.com/ai/feed',
+        categoryMapping: {
+            '通义': 'model', 'Qwen': 'model', '模型': 'model',
+            '技术': 'tech', '研究': 'tech',
+            '产品': 'application', '应用': 'application',
+            'Agent': 'agent', '智能体': 'agent',
+            '行业': 'industry'
         }
     }
 ];
 
 // 备用数据
 const FALLBACK_NEWS = [
-    { id: '1', title: 'DeepSeek发布最新多模态模型', summary: '该模型支持图像、文本、音频多模态理解，在多项基准测试中超越同级别模型表现。', source: '量子位', source_url: 'https://www.qbitai.com/', publish_time: getCurrentDateTime(), category: 'model', tags: ['开源', '多模态'] },
-    { id: '2', title: 'OpenAI GPT-5进入最终测试阶段', summary: 'OpenAI官方确认GPT-5已完成内部测试，预计下月正式发布。', source: '36氪', source_url: 'https://www.36kr.com/', publish_time: getCurrentDateTime(), category: 'model', tags: ['GPT-5', 'OpenAI'] },
-    { id: '3', title: 'MIT发布新型注意力机制', summary: 'MIT研究团队提出Flash Linear Attention新型注意力机制，大幅提升推理速度。', source: '机器之心', source_url: 'https://www.jiqizhixin.com/', publish_time: getCurrentDateTime(), category: 'tech', tags: ['论文', '注意力机制'] },
-    { id: '4', title: '英伟达发布新一代AI芯片', summary: '英伟达推出Blackwell Ultra AI芯片，AI训练性能提升3倍。', source: '新智元', source_url: 'https://aiera.com.cn/', publish_time: getYesterdayDateTime(), category: 'company', tags: ['芯片', '英伟达'] },
-    { id: '5', title: '阿里云推出企业级AI Agent平台', summary: '阿里云发布百炼平台企业版，提供一站式AI Agent开发工具。', source: 'AI科技评论', source_url: 'https://sp.atyun.com/', publish_time: getYesterdayDateTime(), category: 'application', tags: ['Agent', '阿里云'] },
-    { id: '6', title: 'Anthropic发布Claude Enterprise', summary: 'Claude Enterprise支持大规模部署，提供企业级安全管控功能。', source: 'Founder Park', source_url: 'https://founderpark.net/', publish_time: getYesterdayDateTime(), category: 'agent', tags: ['Claude', '企业版'] },
-    { id: '7', title: '2026年AI行业趋势报告', summary: '预测AI Agent市场规模将突破千亿美元，AI原生应用将迎来爆发期。', source: '36氪', source_url: 'https://www.36kr.com/', publish_time: getTwoDaysAgoDateTime(), category: 'industry', tags: ['报告', '趋势'] },
-    { id: '8', title: 'Google DeepMind发布Gemini 2.5 Pro', summary: 'Gemini 2.5 Pro在多项基准测试中创下新纪录。', source: '新智元', source_url: 'https://aiera.com.cn/', publish_time: getTwoDaysAgoDateTime(), category: 'model', tags: ['Google', 'Gemini'] }
+    { id: '1', title: 'OpenAI发布GPT-4o新功能', summary: 'OpenAI宣布GPT-4o支持实时语音交互，性能大幅提升。', source: 'OpenAI', source_url: 'https://openai.com/blog', publish_time: getCurrentDateTime(), category: 'model', tags: ['GPT', 'OpenAI'] },
+    { id: '2', title: 'Anthropic发布Claude 4', summary: 'Claude 4在多项基准测试中超越GPT-4，性能创下新纪录。', source: 'Anthropic', source_url: 'https://www.anthropic.com/blog', publish_time: getCurrentDateTime(), category: 'model', tags: ['Claude', 'Anthropic'] },
+    { id: '3', title: 'DeepSeek开源新模型DeepSeek-V3', summary: 'DeepSeek发布最新开源模型，性能比肩GPT-4。', source: 'DeepSeek', source_url: 'https://www.deepseek.com/blog', publish_time: getCurrentDateTime(), category: 'model', tags: ['开源', 'DeepSeek'] },
+    { id: '4', title: 'Google发布Gemini 2.5', summary: 'Google DeepMind发布Gemini 2.5，多模态能力大幅提升。', source: 'Google AI', source_url: 'https://blog.google/technology/ai/', publish_time: getYesterdayDateTime(), category: 'model', tags: ['Gemini', 'Google'] },
+    { id: '5', title: 'Meta开源Llama 4', summary: 'Meta发布Llama 4，性能超越闭源模型。', source: 'Meta AI', source_url: 'https://ai.facebook.com/blog', publish_time: getYesterdayDateTime(), category: 'model', tags: ['Llama', '开源'] },
+    { id: '6', title: 'Mistral发布Mixtral 8x22B', summary: 'Mistral AI发布最新稀疏MoE模型。', source: 'Mistral AI', source_url: 'https://mistral.ai/news/', publish_time: getYesterdayDateTime(), category: 'model', tags: ['Mistral', '开源'] },
+    { id: '7', title: '百度发布文心大模型4.5', summary: '百度发布新版文心大模型，推理能力提升。', source: '百度AI', source_url: 'https://ai.baidu.com/tech', publish_time: getTwoDaysAgoDateTime(), category: 'model', tags: ['文心', '百度'] },
+    { id: '8', title: '阿里云发布通义千问2.5', summary: '阿里云发布新版通义千问，中文能力超越GPT-4。', source: '阿里云', source_url: 'https://developer.aliyun.com/ai', publish_time: getTwoDaysAgoDateTime(), category: 'model', tags: ['通义', '阿里云'] },
+    { id: '9', title: '量子位：AI行业一周动态', summary: '本周AI行业重要新闻汇总。', source: '量子位', source_url: 'https://www.qbitai.com/', publish_time: getCurrentDateTime(), category: 'industry', tags: ['行业'] },
+    { id: '10', title: '36氪：AI创业公司融资动态', summary: '本周AI领域融资事件汇总。', source: '36氪', source_url: 'https://www.36kr.com/', publish_time: getCurrentDateTime(), category: 'company', tags: ['融资'] }
 ];
 
 function getCurrentDateTime() {
@@ -142,7 +205,7 @@ function categorize(title, sourceName) {
 
 function extractTags(title) {
     const tags = [];
-    const tagKeywords = ['GPT', 'Claude', 'DeepSeek', 'Gemini', 'Agent', '开源', '多模态', '芯片', '论文', '产品'];
+    const tagKeywords = ['GPT', 'Claude', 'DeepSeek', 'Gemini', 'Llama', 'Agent', '开源', '多模态', '论文', '产品'];
     for (const tag of tagKeywords) {
         if (title.includes(tag)) tags.push(tag);
     }
@@ -199,6 +262,8 @@ async function main() {
     for (const source of SOURCES) {
         const news = await fetchRSS(source);
         allNews.push(...news);
+        // 避免请求过快
+        await new Promise(r => setTimeout(r, 500));
     }
     
     if (allNews.length === 0) {
