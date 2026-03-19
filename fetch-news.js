@@ -8,9 +8,8 @@
 const fs = require('fs');
 const path = require('path');
 
-// 新闻来源配置
+// 新闻来源配置 - 只保留能抓取的来源
 const SOURCES = [
-    // 核心科技媒体
     {
         name: '量子位',
         shortName: '量子位',
@@ -43,81 +42,6 @@ const SOURCES = [
             '技术': 'tech', '产品': 'application', 'Agent': 'agent', '行业': 'industry'
         }
     },
-    // 新增AI资讯源
-    {
-        name: '虎嗅AI',
-        shortName: '虎嗅AI',
-        url: 'https://www.huxiu.com/channel/1028',
-        rss: 'https://www.huxiu.com/channel/1028/rss',
-        categoryMapping: {
-            '大模型': 'model', 'GPT': 'model', 'AI': 'model',
-            '技术': 'tech', '融资': 'company', '产品': 'application', '行业': 'industry'
-        }
-    },
-    {
-        name: '脑极宫',
-        shortName: '脑极宫',
-        url: 'https://www.naojigong.com/',
-        rss: 'https://www.naojigong.com/feed',
-        categoryMapping: {
-            '大模型': 'model', 'AI': 'model', '技术': 'tech', '行业': 'industry', '观点': 'industry'
-        }
-    },
-    {
-        name: 'Super黄的AI观察',
-        shortName: 'Super黄',
-        url: 'https://www.superhuang.com/',
-        rss: 'https://www.superhuang.com/feed',
-        categoryMapping: {
-            'AI': 'model', '观察': 'industry', '分析': 'industry'
-        }
-    },
-    {
-        name: '孤独的独角兽',
-        shortName: '独角兽',
-        url: 'https://www.dujiaoshou.io/',
-        rss: 'https://www.dujiaoshou.io/feed',
-        categoryMapping: {
-            'AI': 'model', '大模型': 'model', '融资': 'company', '创业': 'company', '行业': 'industry'
-        }
-    },
-    {
-        name: 'AI增长前线',
-        shortName: 'AI增长前线',
-        url: 'https://www.aigrowth.io/',
-        rss: 'https://www.aigrowth.io/feed',
-        categoryMapping: {
-            'AI': 'model', '增长': 'application', '产品': 'application', '行业': 'industry'
-        }
-    },
-    {
-        name: '数字π',
-        shortName: '数字π',
-        url: 'https://www.shuzipai.com/',
-        rss: 'https://www.shuzipai.com/feed',
-        categoryMapping: {
-            'AI': 'model', '大模型': 'model', '技术': 'tech', '行业': 'industry'
-        }
-    },
-    {
-        name: '元维度',
-        shortName: '元维度',
-        url: 'https://www.meta-dimension.com/',
-        rss: 'https://www.meta-dimension.com/feed',
-        categoryMapping: {
-            'AI': 'model', '元宇宙': 'application', '技术': 'tech', '行业': 'industry'
-        }
-    },
-    {
-        name: '躺平指数',
-        shortName: '躺平指数',
-        url: 'https://www.tanping.com/',
-        rss: 'https://www.tanping.com/feed',
-        categoryMapping: {
-            'AI': 'model', '科技': 'tech', '行业': 'industry'
-        }
-    },
-    // 原有来源
     {
         name: '机器之心',
         shortName: '机器之心',
@@ -130,45 +54,52 @@ const SOURCES = [
         }
     },
     {
-        name: 'DeepSeek',
-        shortName: 'DeepSeek',
-        url: 'https://www.deepseek.com/blog',
-        rss: 'https://www.deepseek.com/blog/rss.xml',
+        name: '月之暗面',
+        shortName: '月之暗面',
+        url: 'https://www.moonshot.cn/',
+        rss: 'https://www.moonshot.cn/feed',
         categoryMapping: {
-            'DeepSeek': 'model', '开源': 'model', '技术': 'tech', '论文': 'tech'
+            '月之暗面': 'model', 'Kimi': 'model', '模型': 'model',
+            '技术': 'tech', '研究': 'tech',
+            '产品': 'application',
+            '行业': 'industry'
         }
     },
     {
-        name: 'AIGC开放社区',
-        shortName: 'AIGC开放社区',
-        url: 'https://www.aigc.club/',
-        rss: 'https://www.aigc.club/feed',
+        name: 'MiniMax',
+        shortName: 'MiniMax',
+        url: 'https://www.minimaxi.com/',
+        rss: 'https://www.minimaxi.com/feed',
         categoryMapping: {
-            '大模型': 'model', 'GPT': 'model', 'AIGC': 'application',
-            '技术': 'tech', '产品': 'application', 'Agent': 'agent', '行业': 'industry'
+            'MiniMax': 'model', '模型': 'model',
+            '技术': 'tech', '研究': 'tech',
+            '产品': 'application',
+            '行业': 'industry'
         }
     },
     {
-        name: 'Founderpark',
-        shortName: 'Founderpark',
-        url: 'https://founderpark.net/',
-        rss: 'https://founderpark.net/feed',
+        name: '字节跳动',
+        shortName: '字节跳动',
+        url: 'https://www.bytedance.com/zh/',
+        rss: 'https://www.bytedance.com/zh/blog/feed',
         categoryMapping: {
-            '大模型': 'model', 'AI': 'model', '融资': 'company', '创业': 'company', '产品': 'application'
+            '字节': 'model', '豆包': 'model', '模型': 'model',
+            '技术': 'tech', '研究': 'tech',
+            '产品': 'application', '应用': 'application',
+            '行业': 'industry'
         }
     }
 ];
 
 // 备用数据
 const FALLBACK_NEWS = [
-    { id: '1', title: 'OpenAI发布GPT-4o新功能', summary: 'OpenAI宣布GPT-4o支持实时语音交互，性能大幅提升。', source: 'OpenAI', source_url: 'https://openai.com/blog', publish_time: getCurrentDateTime(), category: 'model', tags: ['GPT', 'OpenAI'] },
-    { id: '2', title: '虎嗅：AI行业一周动态', summary: '虎嗅AI频道一周重要新闻汇总。', source: '虎嗅AI', source_url: 'https://www.huxiu.com/channel/1028', publish_time: getCurrentDateTime(), category: 'industry', tags: ['行业'] },
-    { id: '3', title: '脑极宫：AI深度观察', summary: '脑极宫AI行业深度分析文章。', source: '脑极宫', source_url: 'https://www.naojigong.com/', publish_time: getYesterdayDateTime(), category: 'industry', tags: ['观察'] },
-    { id: '4', title: '孤独的独角兽：AI创业观察', summary: 'AI创业公司最新动态。', source: '孤独的独角兽', source_url: 'https://www.dujiaoshou.io/', publish_time: getYesterdayDateTime(), category: 'company', tags: ['创业'] },
-    { id: '5', title: 'AI增长前线：产品案例', summary: 'AI产品增长案例分析。', source: 'AI增长前线', source_url: 'https://www.aigrowth.io/', publish_time: getTwoDaysAgoDateTime(), category: 'application', tags: ['增长'] },
-    { id: '6', title: '数字π：AI技术解读', summary: 'AI技术深度解读。', source: '数字π', source_url: 'https://www.shuzipai.com/', publish_time: getTwoDaysAgoDateTime(), category: 'tech', tags: ['技术'] },
-    { id: '7', title: '元维度：AI与元宇宙', summary: 'AI与元宇宙结合趋势分析。', source: '元维度', source_url: 'https://www.meta-dimension.com/', publish_time: getTwoDaysAgoDateTime(), category: 'industry', tags: ['元宇宙'] },
-    { id: '8', title: '量子位：最新AI新闻', summary: '量子位AI新闻汇总。', source: '量子位', source_url: 'https://www.qbitai.com/', publish_time: getCurrentDateTime(), category: 'industry', tags: ['行业'] }
+    { id: '1', title: '量子位：AI行业最新动态', summary: '量子位AI新闻汇总。', source: '量子位', source_url: 'https://www.qbitai.com/', publish_time: getCurrentDateTime(), category: 'industry', tags: ['行业'] },
+    { id: '2', title: '36氪：AI一周新闻汇总', summary: '36氪 AI频道一周重要新闻。', source: '36氪', source_url: 'https://www.36kr.com/', publish_time: getCurrentDateTime(), category: 'industry', tags: ['行业'] },
+    { id: '3', title: 'OpenAI发布新功能', summary: 'OpenAI产品更新。', source: 'OpenAI', source_url: 'https://openai.com/blog', publish_time: getCurrentDateTime(), category: 'model', tags: ['OpenAI'] },
+    { id: '4', title: '机器之心：技术进展', summary: '机器之心AI技术文章。', source: '机器之心', source_url: 'https://www.jiqizhixin.com/', publish_time: getYesterdayDateTime(), category: 'tech', tags: ['技术'] },
+    { id: '5', title: '月之暗面Kimi更新', summary: '月之暗面Kimi智能助手更新。', source: '月之暗面', source_url: 'https://www.moonshot.cn/', publish_time: getYesterdayDateTime(), category: 'agent', tags: ['Kimi'] },
+    { id: '6', title: 'MiniMax模型更新', summary: 'MiniMax最新模型动态。', source: 'MiniMax', source_url: 'https://www.minimaxi.com/', publish_time: getTwoDaysAgoDateTime(), category: 'model', tags: ['模型'] },
+    { id: '7', title: '字节跳动AI动态', summary: '字节跳动AI产品与研究动态。', source: '字节跳动', source_url: 'https://www.bytedance.com/', publish_time: getTwoDaysAgoDateTime(), category: 'model', tags: ['豆包'] }
 ];
 
 function getCurrentDateTime() {
@@ -206,7 +137,7 @@ function categorize(title, sourceName) {
 
 function extractTags(title) {
     const tags = [];
-    const tagKeywords = ['GPT', 'Claude', 'DeepSeek', 'Gemini', 'Llama', 'Agent', '开源', '多模态', '论文', 'AIGC'];
+    const tagKeywords = ['GPT', 'Claude', 'DeepSeek', 'Gemini', 'Llama', 'Agent', '开源', '多模态', '论文', 'Kimi', '豆包'];
     for (const tag of tagKeywords) {
         if (title.includes(tag)) tags.push(tag);
     }
