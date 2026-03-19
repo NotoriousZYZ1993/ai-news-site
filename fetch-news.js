@@ -10,7 +10,7 @@ const path = require('path');
 
 // 新闻来源配置
 const SOURCES = [
-    // 国内科技媒体
+    // 核心科技媒体
     {
         name: '量子位',
         shortName: '量子位',
@@ -34,6 +34,91 @@ const SOURCES = [
         }
     },
     {
+        name: 'OpenAI',
+        shortName: 'OpenAI',
+        url: 'https://openai.com/blog',
+        rss: 'https://openai.com/blog/rss.xml',
+        categoryMapping: {
+            'GPT': 'model', 'O1': 'model', 'Sora': 'model',
+            '技术': 'tech', '产品': 'application', 'Agent': 'agent', '行业': 'industry'
+        }
+    },
+    // 新增AI资讯源
+    {
+        name: '虎嗅AI',
+        shortName: '虎嗅AI',
+        url: 'https://www.huxiu.com/channel/1028',
+        rss: 'https://www.huxiu.com/channel/1028/rss',
+        categoryMapping: {
+            '大模型': 'model', 'GPT': 'model', 'AI': 'model',
+            '技术': 'tech', '融资': 'company', '产品': 'application', '行业': 'industry'
+        }
+    },
+    {
+        name: '脑极宫',
+        shortName: '脑极宫',
+        url: 'https://www.naojigong.com/',
+        rss: 'https://www.naojigong.com/feed',
+        categoryMapping: {
+            '大模型': 'model', 'AI': 'model', '技术': 'tech', '行业': 'industry', '观点': 'industry'
+        }
+    },
+    {
+        name: 'Super黄的AI观察',
+        shortName: 'Super黄',
+        url: 'https://www.superhuang.com/',
+        rss: 'https://www.superhuang.com/feed',
+        categoryMapping: {
+            'AI': 'model', '观察': 'industry', '分析': 'industry'
+        }
+    },
+    {
+        name: '孤独的独角兽',
+        shortName: '独角兽',
+        url: 'https://www.dujiaoshou.io/',
+        rss: 'https://www.dujiaoshou.io/feed',
+        categoryMapping: {
+            'AI': 'model', '大模型': 'model', '融资': 'company', '创业': 'company', '行业': 'industry'
+        }
+    },
+    {
+        name: 'AI增长前线',
+        shortName: 'AI增长前线',
+        url: 'https://www.aigrowth.io/',
+        rss: 'https://www.aigrowth.io/feed',
+        categoryMapping: {
+            'AI': 'model', '增长': 'application', '产品': 'application', '行业': 'industry'
+        }
+    },
+    {
+        name: '数字π',
+        shortName: '数字π',
+        url: 'https://www.shuzipai.com/',
+        rss: 'https://www.shuzipai.com/feed',
+        categoryMapping: {
+            'AI': 'model', '大模型': 'model', '技术': 'tech', '行业': 'industry'
+        }
+    },
+    {
+        name: '元维度',
+        shortName: '元维度',
+        url: 'https://www.meta-dimension.com/',
+        rss: 'https://www.meta-dimension.com/feed',
+        categoryMapping: {
+            'AI': 'model', '元宇宙': 'application', '技术': 'tech', '行业': 'industry'
+        }
+    },
+    {
+        name: '躺平指数',
+        shortName: '躺平指数',
+        url: 'https://www.tanping.com/',
+        rss: 'https://www.tanping.com/feed',
+        categoryMapping: {
+            'AI': 'model', '科技': 'tech', '行业': 'industry'
+        }
+    },
+    // 原有来源
+    {
         name: '机器之心',
         shortName: '机器之心',
         url: 'https://www.jiqizhixin.com/',
@@ -42,17 +127,6 @@ const SOURCES = [
             '大模型': 'model', 'GPT': 'model', '模型': 'model',
             '技术': 'tech', '论文': 'tech', '融资': 'company',
             '产品': 'application', 'Agent': 'agent', '行业': 'industry'
-        }
-    },
-    // 大模型厂商
-    {
-        name: 'OpenAI',
-        shortName: 'OpenAI',
-        url: 'https://openai.com/blog',
-        rss: 'https://openai.com/blog/rss.xml',
-        categoryMapping: {
-            'GPT': 'model', 'O1': 'model', 'Sora': 'model',
-            '技术': 'tech', '产品': 'application', 'Agent': 'agent', '行业': 'industry'
         }
     },
     {
@@ -64,70 +138,14 @@ const SOURCES = [
             'DeepSeek': 'model', '开源': 'model', '技术': 'tech', '论文': 'tech'
         }
     },
-    // AI资讯平台
-    {
-        name: 'AI前沿',
-        shortName: 'AI前沿',
-        url: 'https://www.qianyan.ai/',
-        rss: 'https://www.qianyan.ai/feed',
-        categoryMapping: {
-            '大模型': 'model', 'GPT': 'model', 'AI': 'model',
-            '技术': 'tech', '融资': 'company', '产品': 'application', '行业': 'industry'
-        }
-    },
-    {
-        name: 'AI洞察',
-        shortName: 'AI洞察',
-        url: 'https://www.ai-insights.ai/',
-        rss: 'https://www.ai-insights.ai/feed',
-        categoryMapping: {
-            '大模型': 'model', 'AI': 'model', '技术': 'tech', '行业': 'industry', '趋势': 'industry'
-        }
-    },
-    {
-        name: '赛博禅宗',
-        shortName: '赛博禅宗',
-        url: 'https://www.cyberzen.com/',
-        rss: 'https://www.cyberzen.com/feed',
-        categoryMapping: {
-            '大模型': 'model', 'AI': 'model', '技术': 'tech', '产品': 'application', '行业': 'industry'
-        }
-    },
-    {
-        name: 'HyperAI超神经',
-        shortName: 'HyperAI超神经',
-        url: 'https://hyper.ai/',
-        rss: 'https://hyper.ai/feed',
-        categoryMapping: {
-            '大模型': 'model', 'AI': 'model', '数据集': 'tech', '技术': 'tech', '开源': 'model'
-        }
-    },
     {
         name: 'AIGC开放社区',
         shortName: 'AIGC开放社区',
         url: 'https://www.aigc.club/',
         rss: 'https://www.aigc.club/feed',
         categoryMapping: {
-            '大模型': 'model', 'GPT': 'model', 'AI': 'model', 'AIGC': 'application',
+            '大模型': 'model', 'GPT': 'model', 'AIGC': 'application',
             '技术': 'tech', '产品': 'application', 'Agent': 'agent', '行业': 'industry'
-        }
-    },
-    {
-        name: '老刘AI实验室',
-        shortName: '老刘AI实验室',
-        url: 'https://www.laoliuai.com/',
-        rss: 'https://www.laoliuai.com/feed',
-        categoryMapping: {
-            '大模型': 'model', 'GPT': 'model', 'AI': 'model', '技术': 'tech', '产品': 'application'
-        }
-    },
-    {
-        name: '刀姐Dorris',
-        shortName: '刀姐Dorris',
-        url: 'https://www.daojieai.com/',
-        rss: 'https://www.daojieai.com/feed',
-        categoryMapping: {
-            'AI': 'model', '营销': 'application', '产品': 'application', '行业': 'industry'
         }
     },
     {
@@ -138,57 +156,19 @@ const SOURCES = [
         categoryMapping: {
             '大模型': 'model', 'AI': 'model', '融资': 'company', '创业': 'company', '产品': 'application'
         }
-    },
-    {
-        name: '老虎加速器',
-        shortName: '老虎加速器',
-        url: 'https://tigergp.com/',
-        rss: 'https://tigergp.com/feed',
-        categoryMapping: {
-            'AI': 'model', '融资': 'company', '创业': 'company', '投资': 'company', '行业': 'industry'
-        }
-    },
-    // 国内AI厂商
-    {
-        name: '百度AI',
-        shortName: '百度AI',
-        url: 'https://ai.baidu.com/',
-        rss: 'https://ai.baidu.com/feed/rss',
-        categoryMapping: { '文心': 'model', 'ERNIE': 'model', '技术': 'tech', '产品': 'application' }
-    },
-    {
-        name: '阿里云',
-        shortName: '阿里云',
-        url: 'https://developer.aliyun.com/ai',
-        rss: 'https://developer.aliyun.com/ai/feed',
-        categoryMapping: { '通义': 'model', 'Qwen': 'model', '技术': 'tech', 'Agent': 'agent' }
-    },
-    {
-        name: '腾讯AI Lab',
-        shortName: '腾讯AI Lab',
-        url: 'https://ai.tencent.com/',
-        rss: 'https://ai.tencent.com/ailab/feed/rss',
-        categoryMapping: { '混元': 'model', '技术': 'tech', '研究': 'tech' }
-    },
-    {
-        name: '字节跳动AI',
-        shortName: '字节跳动AI',
-        url: 'https://www.bytedance.com/zh/',
-        rss: 'https://www.bytedance.com/zh/blog/feed',
-        categoryMapping: { '豆包': 'model', '技术': 'tech', '产品': 'application' }
     }
 ];
 
 // 备用数据
 const FALLBACK_NEWS = [
     { id: '1', title: 'OpenAI发布GPT-4o新功能', summary: 'OpenAI宣布GPT-4o支持实时语音交互，性能大幅提升。', source: 'OpenAI', source_url: 'https://openai.com/blog', publish_time: getCurrentDateTime(), category: 'model', tags: ['GPT', 'OpenAI'] },
-    { id: '2', title: 'DeepSeek开源新模型', summary: 'DeepSeek发布最新开源模型，性能比肩GPT-4。', source: 'DeepSeek', source_url: 'https://www.deepseek.com/blog', publish_time: getCurrentDateTime(), category: 'model', tags: ['开源', 'DeepSeek'] },
-    { id: '3', title: '百度发布文心大模型4.5', summary: '百度发布新版文心大模型，推理能力大幅提升。', source: '百度AI', source_url: 'https://ai.baidu.com/', publish_time: getYesterdayDateTime(), category: 'model', tags: ['文心', '百度'] },
-    { id: '4', title: '阿里云发布通义千问2.5', summary: '阿里云发布新版通义千问。', source: '阿里云', source_url: 'https://developer.aliyun.com/ai', publish_time: getYesterdayDateTime(), category: 'model', tags: ['通义', '阿里'] },
-    { id: '5', title: '腾讯发布混元大模型', summary: '腾讯AI Lab发布混元大模型。', source: '腾讯AI Lab', source_url: 'https://ai.tencent.com/', publish_time: getYesterdayDateTime(), category: 'model', tags: ['混元', '腾讯'] },
-    { id: '6', title: '字节跳动发布豆包大模型', summary: '字节跳动发布豆包大模型。', source: '字节跳动AI', source_url: 'https://www.bytedance.com/', publish_time: getTwoDaysAgoDateTime(), category: 'model', tags: ['豆包', '字节'] },
-    { id: '7', title: 'AI行业周报：最新动态汇总', summary: '本周AI行业重要新闻汇总。', source: 'AI前沿', source_url: 'https://www.qianyan.ai/', publish_time: getCurrentDateTime(), category: 'industry', tags: ['行业'] },
-    { id: '8', title: 'AIGC应用落地案例分享', summary: 'AIGC在各行业应用案例。', source: 'AIGC开放社区', source_url: 'https://www.aigc.club/', publish_time: getCurrentDateTime(), category: 'application', tags: ['AIGC'] }
+    { id: '2', title: '虎嗅：AI行业一周动态', summary: '虎嗅AI频道一周重要新闻汇总。', source: '虎嗅AI', source_url: 'https://www.huxiu.com/channel/1028', publish_time: getCurrentDateTime(), category: 'industry', tags: ['行业'] },
+    { id: '3', title: '脑极宫：AI深度观察', summary: '脑极宫AI行业深度分析文章。', source: '脑极宫', source_url: 'https://www.naojigong.com/', publish_time: getYesterdayDateTime(), category: 'industry', tags: ['观察'] },
+    { id: '4', title: '孤独的独角兽：AI创业观察', summary: 'AI创业公司最新动态。', source: '孤独的独角兽', source_url: 'https://www.dujiaoshou.io/', publish_time: getYesterdayDateTime(), category: 'company', tags: ['创业'] },
+    { id: '5', title: 'AI增长前线：产品案例', summary: 'AI产品增长案例分析。', source: 'AI增长前线', source_url: 'https://www.aigrowth.io/', publish_time: getTwoDaysAgoDateTime(), category: 'application', tags: ['增长'] },
+    { id: '6', title: '数字π：AI技术解读', summary: 'AI技术深度解读。', source: '数字π', source_url: 'https://www.shuzipai.com/', publish_time: getTwoDaysAgoDateTime(), category: 'tech', tags: ['技术'] },
+    { id: '7', title: '元维度：AI与元宇宙', summary: 'AI与元宇宙结合趋势分析。', source: '元维度', source_url: 'https://www.meta-dimension.com/', publish_time: getTwoDaysAgoDateTime(), category: 'industry', tags: ['元宇宙'] },
+    { id: '8', title: '量子位：最新AI新闻', summary: '量子位AI新闻汇总。', source: '量子位', source_url: 'https://www.qbitai.com/', publish_time: getCurrentDateTime(), category: 'industry', tags: ['行业'] }
 ];
 
 function getCurrentDateTime() {
@@ -226,7 +206,7 @@ function categorize(title, sourceName) {
 
 function extractTags(title) {
     const tags = [];
-    const tagKeywords = ['GPT', 'Claude', 'DeepSeek', 'Gemini', 'Llama', 'Agent', '开源', '多模态', '论文', '文心', '通义', '星火', 'Kimi', 'AIGC'];
+    const tagKeywords = ['GPT', 'Claude', 'DeepSeek', 'Gemini', 'Llama', 'Agent', '开源', '多模态', '论文', 'AIGC'];
     for (const tag of tagKeywords) {
         if (title.includes(tag)) tags.push(tag);
     }
